@@ -2,6 +2,8 @@ import Nav from "@/components/Nav";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import SupabaseProvider from "@/providers/SupabaseProvider";
+import ThemeProvider from "@/providers/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Nav />
-        {children}
+        <ThemeProvider>
+          <SupabaseProvider>
+            <Nav />
+            {children}
+          </SupabaseProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
