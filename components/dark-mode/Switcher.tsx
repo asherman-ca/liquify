@@ -25,6 +25,7 @@ export function ThemeSwitcher() {
       color="primary"
       startContent={<SunIcon />}
       endContent={<MoonIcon />}
+      className="cursor-pointer"
     />
   );
 }
