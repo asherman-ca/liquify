@@ -6,7 +6,7 @@ export default async function Home() {
 
   return (
     <main>
-      <ClientTest />
+      {/* <ClientTest /> */}
       <div>
         {coins.map((coin) => (
           <div className="mt-4 p-5" key={coin.id}>

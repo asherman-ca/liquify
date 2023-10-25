@@ -44,27 +44,28 @@ const Dropdown = ({ user }: DropdownProps) => {
         <DropdownMenu aria-label="Profile Actions" variant="flat">
           {user && (
             <DropdownSection showDivider>
-              <DropdownItem>
+              <DropdownItem className="cursor-default" isReadOnly>
                 <p className="font-semibold">
                   Signed in as: <br /> {user?.user.email}
                 </p>
               </DropdownItem>
             </DropdownSection>
           )}
-          <DropdownItem href="/profile">Profile</DropdownItem>
-          {/* <DropdownItem closeOnSelect={false} isReadOnly={true}>
-            <ThemeSwitcher />
-          </DropdownItem> */}
-          <DropdownItem
-            isReadOnly
-            endContent={<ThemeSwitcher />}
-            className="cursor-default"
-          >
-            Theme
-          </DropdownItem>
-          <DropdownItem href="/settings">Settings</DropdownItem>
+          <DropdownSection showDivider>
+            <DropdownItem
+              isReadOnly
+              endContent={<ThemeSwitcher />}
+              className="cursor-default"
+            >
+              Theme
+            </DropdownItem>
+            <DropdownItem href="/profile">Profile</DropdownItem>
+            <DropdownItem href="/settings">Settings</DropdownItem>
+          </DropdownSection>
           {user ? (
-            <DropdownItem onClick={handleSignOut}>Logout</DropdownItem>
+            <DropdownItem onClick={handleSignOut} className="text-red-500">
+              Logout
+            </DropdownItem>
           ) : (
             <DropdownItem onClick={() => handleLink("/login")}>
               Login

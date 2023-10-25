@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
+import Sidebar from "@/components/Sidebar";
+import Content from "@/components/Content";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +24,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <SupabaseProvider>
-            <Nav />
-            {children}
+            <Sidebar className="p-8">
+              <Content className="flex flex-1 flex-col">{children}</Content>
+            </Sidebar>
           </SupabaseProvider>
         </ThemeProvider>
       </body>
