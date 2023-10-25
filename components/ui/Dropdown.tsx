@@ -5,32 +5,22 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  User,
   Avatar,
 } from "@nextui-org/react";
-// import Avatar from "./Avatar";
+import { UserMetadata } from "@supabase/gotrue-js";
 
 interface DropdownProps {
-  user: {
-    avatar_url: string;
-    name: string;
-  };
+  user: UserMetadata;
 }
 
 const Dropdown = ({ user }: DropdownProps) => {
-  const { avatar_url, name } = user;
+  const { avatar_url } = user;
 
   return (
     <div className="flex items-center gap-4">
       <NextDropdown placement="bottom-end">
         <DropdownTrigger>
-          <Avatar
-            as="button"
-            isBordered
-            showFallback
-            name={name[0] ?? ""}
-            src={avatar_url ?? ""}
-          />
+          <Avatar as="button" isBordered showFallback src={avatar_url} />
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions" variant="flat">
           <DropdownItem href="/profile">Profile</DropdownItem>
