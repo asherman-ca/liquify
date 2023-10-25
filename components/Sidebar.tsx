@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Coins, Home, PiggyBank } from "lucide-react";
 import { ReactComponentElement } from "react";
+import { usePathname } from "next/navigation";
+import { cn } from "@/libs/utils";
 
 interface SideBarProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -32,6 +35,8 @@ const links: LinkType[] = [
 ];
 
 const Sidebar = ({ children, ...props }: SideBarProps) => {
+  const pathname = usePathname();
+
   return (
     <div className="flex">
       <div
@@ -53,7 +58,13 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
             <Link
               href={link.url}
               key={link.title}
-              className="flex items-center gap-2 rounded-full p-4 font-medium hover:bg-gray-100"
+              className={cn(
+                "flex items-center gap-4 rounded-full p-4 font-medium hover:bg-gray-100 dark:hover:bg-blue-950 dark:hover:text-white",
+                {
+                  "text-blue-700 dark:bg-blue-950 dark:text-blue-500 dark:hover:text-white":
+                    pathname === link.url,
+                },
+              )}
             >
               {link.logo}
               {link.title}
