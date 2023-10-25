@@ -29,5 +29,9 @@ Tailwind
 Public API:
 Coincap
 
-Style:
+Style Influence:
 Coinbase
+
+AI Image Modeling:
+https://replicate.com/cjwbw/rembg
+MidJourney

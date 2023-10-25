@@ -11,8 +11,8 @@ const Nav = async () => {
     await supabase.auth.getSession();
 
   return (
-    <div className="flex items-center justify-between p-8">
-      <p className="text-3xl font-bold">L</p>
+    <div className="border-b-1 flex items-center justify-between border-gray-300 p-4">
+      <h2 className="text-lg font-medium">Home</h2>
       <Dropdown user={sessionData.session} />
     </div>
   );

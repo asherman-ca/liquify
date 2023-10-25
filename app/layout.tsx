@@ -25,7 +25,7 @@ export default function RootLayout({
         <ThemeProvider>
           <SupabaseProvider>
             <Sidebar className="p-8">
-              <Content className="flex flex-1 flex-col">{children}</Content>
+              <Content>{children}</Content>
             </Sidebar>
           </SupabaseProvider>
         </ThemeProvider>
