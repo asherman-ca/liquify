@@ -1,6 +1,8 @@
 "use client";
 
+import { Button } from "@nextui-org/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -57,22 +59,53 @@ export default function Login() {
   };
 
   return (
-    <>
-      <input
-        name="email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <input
-        type="password"
-        name="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <button onClick={handleGoogleSignIn}>Google In</button>
-      <button onClick={handleSignUp}>Sign up</button>
-      <button onClick={handleSignIn}>Sign in</button>
-      <button onClick={handleSignOut}>Sign out</button>
-    </>
+    <div className="flex justify-center pt-32">
+      <div className="border-1 flex flex-col gap-8 rounded-md border-gray-300 p-8">
+        <h1 className="text-2xl font-semibold text-blue-500">liquify</h1>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-semibold">Sign in to Liquify</h2>
+          <p>Not your device? Use a private or incognito window to sign in.</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <input
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+          <input
+            type="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+          <div className="flex w-full gap-4">
+            <Button onClick={handleSignIn} color="primary" className="flex-1">
+              Sign in
+            </Button>
+            <Button onClick={handleSignUp} color="primary" className="flex-1">
+              Sign up
+            </Button>
+          </div>
+        </div>
+        <div className="relative flex justify-center">
+          <p className="bg-white p-2 text-center text-sm">OR</p>
+          <div className="border-b-1 absolute left-0 top-[50%] -z-10 w-full border-gray-300"></div>
+        </div>
+        <Button
+          variant="ghost"
+          onClick={handleGoogleSignIn}
+          className="mx-auto"
+        >
+          <Image
+            src="/googleIcon.png"
+            alt="Google Icon"
+            width={48}
+            height={48}
+            className="h-5 w-5"
+          />
+          <p>Sign in with Google</p>
+        </Button>
+      </div>
+    </div>
   );
 }

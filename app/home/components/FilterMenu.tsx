@@ -30,13 +30,13 @@ const FilterMenu: FC<FilterMenuProps> = ({ setFilter, filter }) => {
         </Button>
       </DropdownTrigger>
       <DropdownMenu>
-        <DropdownItem onClick={() => setFilter("watchlist")}>
-          Watchlist
-        </DropdownItem>
         <DropdownItem onClick={() => setFilter("trending")}>
           Trending
         </DropdownItem>
         <DropdownItem onClick={() => setFilter("top")}>Top assets</DropdownItem>
+        <DropdownItem onClick={() => setFilter("watchlist")}>
+          Watchlist
+        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
