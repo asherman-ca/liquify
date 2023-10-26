@@ -19,7 +19,7 @@ type LinkType = {
 const links: LinkType[] = [
   {
     title: "Home",
-    url: "/",
+    url: "/home",
     logo: <Home />,
   },
   {
