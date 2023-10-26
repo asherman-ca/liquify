@@ -9,7 +9,7 @@ const page = async () => {
   const balance = await getBalance();
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col">
       <BalanceRow initialBalance={balance} />
       <CoinTable initialCoins={coins} />
     </div>

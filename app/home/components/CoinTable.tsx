@@ -55,6 +55,10 @@ const CoinTable: FC<CoinTableProps> = ({ initialCoins }) => {
           ))}
         </tbody>
       </table>
+      <p className="text-sm">
+        Information is provided for informational purposes only and is not
+        investment advice. <span className="text-blue-500">Learn more</span>
+      </p>
     </div>
   );
 };
