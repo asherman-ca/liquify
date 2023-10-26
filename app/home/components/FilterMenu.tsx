@@ -7,10 +7,14 @@ import {
   DropdownTrigger,
 } from "@nextui-org/react";
 import { FC } from "react";
+import { FilterType } from "./CoinTable";
 
-interface FilterMenuProps {}
+interface FilterMenuProps {
+  setFilter: (filter: FilterType) => void;
+  filter: string;
+}
 
-const FilterMenu: FC<FilterMenuProps> = ({}) => {
+const FilterMenu: FC<FilterMenuProps> = ({ setFilter, filter }) => {
   return (
     <Dropdown
       classNames={{
@@ -20,15 +24,19 @@ const FilterMenu: FC<FilterMenuProps> = ({}) => {
       <DropdownTrigger>
         <Button
           variant={"bordered"}
-          className="rounded-full text-base font-semibold"
+          className="rounded-full text-base font-semibold capitalize"
         >
-          Watchlist
+          {filter === "top" ? "Top assets" : filter}
         </Button>
       </DropdownTrigger>
       <DropdownMenu>
-        <DropdownItem>Watchlist</DropdownItem>
-        <DropdownItem>Trending</DropdownItem>
-        <DropdownItem>Top assets</DropdownItem>
+        <DropdownItem onClick={() => setFilter("watchlist")}>
+          Watchlist
+        </DropdownItem>
+        <DropdownItem onClick={() => setFilter("trending")}>
+          Trending
+        </DropdownItem>
+        <DropdownItem onClick={() => setFilter("top")}>Top assets</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );

@@ -1,5 +1,3 @@
-import { Coin } from "@/types_d";
-
 export default async function (): Promise<Coin[]> {
   let res;
   const requestOptions: RequestInit = {
@@ -8,7 +6,7 @@ export default async function (): Promise<Coin[]> {
   };
   try {
     const coins = await fetch(
-      "https://api.coincap.io/v2/assets",
+      "https://api.coincap.io/v2/assets?limit=10",
       requestOptions,
     );
     if (!coins) throw new Error();
