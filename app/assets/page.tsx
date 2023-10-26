@@ -9,7 +9,7 @@ const page = async () => {
     redirect("/login");
   }
 
-  return <div>trade</div>;
+  return <div>Assets</div>;
 };
 
 export default page;

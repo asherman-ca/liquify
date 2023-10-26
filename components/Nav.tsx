@@ -2,7 +2,6 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Dropdown from "./ui/Dropdown";
 import NavTitle from "./ui/NavTitle";
-import { Button } from "@nextui-org/react";
 import BuySellButton from "./ui/BuySellButton";
 
 const Nav = async () => {
