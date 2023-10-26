@@ -9,18 +9,14 @@ const getBalance = async (): Promise<number> => {
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();
 
-  console.log(sessionData.session);
-
   if (sessionData.session === null) return 99;
 
   const { data } = await supabase
-    .from("users")
-    .select("*")
-    .eq("id", sessionData.session.user.id);
+    .from("balances")
+    .select("balance")
+    .eq("user_id", sessionData.session.user.id);
 
-  if (!data) return 9000.39;
-
-  return data;
+  return data![0].balance;
 };
 
 export default getBalance;
