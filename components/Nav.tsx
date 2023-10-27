@@ -17,7 +17,7 @@ const Nav = async () => {
   const coins = await getCoins();
 
   return (
-    <div className="border-b-1 relative flex items-center justify-between border-gray-300 px-10 py-6">
+    <div className="border-b-1 flex items-center justify-between border-gray-300 px-10 py-6">
       <NavTitle />
       <div className="flex items-center gap-8">
         <NavSearchDropdown coins={coins} />
