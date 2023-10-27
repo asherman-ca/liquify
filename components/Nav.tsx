@@ -5,6 +5,7 @@ import NavTitle from "./ui/NavTitle";
 import BuySellButton from "./ui/BuySellButton";
 import NavSearchDropdown from "./NavSearchDropdown";
 import getCoins from "@/actions/getCoins";
+import BuySellModal from "./BuySellModal";
 
 const Nav = async () => {
   const supabase = createServerComponentClient({
@@ -21,7 +22,7 @@ const Nav = async () => {
       <NavTitle />
       <div className="flex items-center gap-8">
         <NavSearchDropdown coins={coins} />
-        {sessionData.session && <BuySellButton />}
+        {sessionData.session && <BuySellModal />}
         <Dropdown user={sessionData.session} />
       </div>
     </div>

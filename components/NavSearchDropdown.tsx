@@ -45,14 +45,16 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
   };
 
   return (
-    <div ref={componentRef} className="relative">
-      {/* {open && ( */}
+    <div ref={componentRef} className="relative z-50">
       <div
-        className={`duration-2000 fixed left-0 top-0  -z-10 h-screen w-full bg-gray-300 transition ease-in  ${
-          open ? "opacity-50" : "opacity-0"
+        onClick={() => {
+          setOpen(false);
+          setSearch("");
+        }}
+        className={`duration-2000 fixed left-0 top-0 z-10 h-screen w-full bg-gray-500 transition ease-in  ${
+          open ? "flex opacity-50" : "hidden opacity-0"
         }`}
       ></div>
-      {/* )} */}
       <Input
         onClick={() => setOpen(true)}
         placeholder="Search for an asset"
@@ -63,7 +65,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
           setSearch(e.target.value);
         }}
         startContent={<Search className="h-5 w-5" strokeWidth={3} />}
-        className="min-w-[250px]"
+        className="relative min-w-[250px]"
       />
       {open && (
         <div
