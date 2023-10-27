@@ -5,6 +5,8 @@ import getBalance from "@/actions/getBalance";
 import CoinTable from "./components/CoinTable";
 import getUser from "@/actions/getUser";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const coins = await getCoins();
   const user = await getUser();
@@ -14,7 +16,6 @@ const page = async () => {
     const balance = await getBalance();
     balanceElement = <BalanceRow initialBalance={balance} />;
   }
-  // const balance = await getBalance();
 
   return (
     <div className="flex flex-1 flex-col">
