@@ -39,12 +39,20 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
   }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    router.push(`/coin/${e.currentTarget.id}`);
     setOpen(false);
+    setSearch("");
+    router.push(`/coin/${e.currentTarget.id}`);
   };
 
   return (
     <div ref={componentRef} className="relative">
+      {/* {open && ( */}
+      <div
+        className={`duration-2000 fixed left-0 top-0  -z-10 h-screen w-full bg-gray-300 transition ease-in  ${
+          open ? "opacity-50" : "opacity-0"
+        }`}
+      ></div>
+      {/* )} */}
       <Input
         onClick={() => setOpen(true)}
         placeholder="Search for an asset"
@@ -60,7 +68,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
       {open && (
         <div
           id="coin dropdown"
-          className="absolute top-[100%] z-10 mt-4 flex w-full flex-col rounded-lg bg-white p-2 shadow-xl"
+          className="scrollbar-hide absolute top-[100%] z-10 mt-4 flex max-h-[490px] w-full flex-col overflow-auto rounded-lg bg-white p-2 shadow-xl"
         >
           {filteredCoins.map((coin) => (
             <button
