@@ -3,7 +3,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { Input } from "@nextui-org/react";
 import { Search } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface NavSearchDropdownProps {
   coins: Coin[];
@@ -13,6 +13,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
   const [search, setSearch] = useState<string>("");
   const componentRef = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   const filteredCoins =
     search === ""
@@ -37,6 +38,11 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
     };
   }, []);
 
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    router.push(`/coin/${e.currentTarget.id}`);
+    setOpen(false);
+  };
+
   return (
     <div ref={componentRef} className="relative">
       <Input
@@ -57,10 +63,10 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
           className="absolute top-[100%] z-10 mt-4 flex w-full flex-col rounded-lg bg-white p-2 shadow-xl"
         >
           {filteredCoins.map((coin) => (
-            <Link
-              href={`/coin/${coin.id}`}
+            <button
               id={coin.id}
               className="flex items-center justify-between rounded-md p-4 hover:bg-gray-100"
+              onClick={(e) => handleClick(e)}
             >
               <div className="flex items-center gap-2 ">
                 <Image
@@ -73,7 +79,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
                 <p className="text-medium font-semibold">{coin.name}</p>
               </div>
               <p>{coin.symbol}</p>
-            </Link>
+            </button>
           ))}
         </div>
       )}
