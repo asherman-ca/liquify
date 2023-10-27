@@ -38,7 +38,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
     };
   }, []);
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     router.push(`/coin/${e.currentTarget.id}`);
     setOpen(false);
   };
@@ -66,7 +66,9 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
             <button
               id={coin.id}
               className="flex items-center justify-between rounded-md p-4 hover:bg-gray-100"
-              onClick={(e) => handleClick(e)}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                handleClick(e)
+              }
             >
               <div className="flex items-center gap-2 ">
                 <Image
