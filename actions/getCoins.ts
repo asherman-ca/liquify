@@ -6,7 +6,7 @@ export default async function (): Promise<Coin[]> {
   };
   try {
     const coins = await fetch(
-      "https://api.coincap.io/v2/assets?limit=10",
+      "https://api.coincap.io/v2/assets?limit=20",
       requestOptions,
     );
     if (!coins) throw new Error();

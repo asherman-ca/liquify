@@ -22,7 +22,7 @@ const Nav = async () => {
       <NavTitle />
       <div className="flex items-center gap-8">
         <NavSearchDropdown coins={coins} />
-        {sessionData.session && <BuySellModal />}
+        {sessionData.session && <BuySellModal coins={coins} />}
         <Dropdown user={sessionData.session} />
       </div>
     </div>

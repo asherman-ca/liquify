@@ -88,7 +88,9 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
                   width={24}
                   className="h-6 w-6"
                 />
-                <p className="text-medium font-semibold">{coin.name}</p>
+                <p className="text-medium truncate pr-4 font-semibold">
+                  {coin.name}
+                </p>
               </div>
               <p>{coin.symbol}</p>
             </button>

@@ -32,7 +32,7 @@ const Dropdown = ({ user }: DropdownProps) => {
 
   return (
     <div className="flex items-center gap-4">
-      <NextDropdown placement="bottom-end" backdrop="blur">
+      <NextDropdown placement="bottom-end" backdrop="opaque">
         <DropdownTrigger>
           <Avatar
             as="button"

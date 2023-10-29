@@ -9,11 +9,21 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
-interface BuySellModalProps {}
+interface BuySellModalProps {
+  coins: Coin[];
+}
 
-const BuySellModal: FC<BuySellModalProps> = ({}) => {
+const BuySellModal: FC<BuySellModalProps> = ({ coins }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const router = useRouter();
+
+  const handleSell = (onClose: () => void) => {
+    console.log("sell");
+    onClose();
+    router.push("/assets");
+  };
 
   return (
     <>
@@ -25,39 +35,28 @@ const BuySellModal: FC<BuySellModalProps> = ({}) => {
         Buy & Sell
       </Button>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} hideCloseButton>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+              <ModalHeader className="flex p-0">
+                <div className="border-r-1 flex-1 border-gray-300 p-4 text-center">
+                  Buy
+                </div>
+                <div
+                  className="border-b-1 flex-1 cursor-pointer border-gray-300 p-4 text-center"
+                  onClick={() => handleSell(onClose)}
+                >
+                  Sell
+                </div>
               </ModalHeader>
-              <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-              </ModalBody>
+              <ModalBody></ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
+                <Button
+                  className="flex w-full rounded-full text-center"
+                  color="primary"
+                >
+                  Buy Coin
                 </Button>
               </ModalFooter>
             </>
