@@ -8,9 +8,7 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  button,
 } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface BuySellModalProps {
@@ -18,6 +16,7 @@ interface BuySellModalProps {
 }
 
 type Inputs = {
+  coin_name: string;
   coin_id: string;
   value: number;
   leverage: number;
@@ -25,7 +24,6 @@ type Inputs = {
 };
 
 const BuySellModal: FC<BuySellModalProps> = ({ coins }) => {
-  const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [open, setOpen] = useState<boolean>(false);
   const {
@@ -33,15 +31,23 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins }) => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<Inputs>();
+    watch,
+  } = useForm<Inputs>({
+    defaultValues: {
+      coin_name: "Bitcoin",
+      coin_id: "btc",
+      direction: "long",
+      value: 0,
+      leverage: 1,
+    },
+  });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
-  // const handleSell = (onClose: () => void) => {
-  //   console.log("sell");
-  //   onClose();
-  //   router.push("/assets");
-  // };
+  const handleCoinSelection = (coinName: string) => {
+    setValue("coin_name", coinName);
+    setOpen(false);
+  };
 
   return (
     <>
@@ -53,24 +59,33 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins }) => {
         Buy & Sell
       </Button>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} hideCloseButton>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        hideCloseButton
+        onClose={() => setOpen(false)}
+      >
         {!open ? (
           <ModalContent>
             {(onClose) => (
               <>
                 <ModalHeader className="flex p-0">
-                  <div
-                    className="border-r-1 flex-1 border-gray-300 p-4 text-center"
+                  <button
+                    className={`border-r-1 flex-1 border-gray-300 p-4 text-center ${
+                      watch("direction") === "short" && "border-b-1"
+                    }`}
                     onClick={() => setValue("direction", "long")}
                   >
                     Long
-                  </div>
-                  <div
-                    className="border-b-1 flex-1 cursor-pointer border-gray-300 p-4 text-center"
+                  </button>
+                  <button
+                    className={`flex-1 border-gray-300 p-4 text-center ${
+                      watch("direction") === "long" && "border-b-1"
+                    }`}
                     onClick={() => setValue("direction", "short")}
                   >
                     Short
-                  </div>
+                  </button>
                 </ModalHeader>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <ModalBody>
@@ -88,11 +103,12 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins }) => {
                   </ModalBody>
                   <ModalFooter>
                     <Button
-                      className="flex w-full rounded-full text-center"
+                      className="flex w-full rounded-full text-center font-semibold"
                       color="primary"
                       type="submit"
                     >
-                      Buy Coin
+                      <span className="capitalize">{watch("direction")}</span>{" "}
+                      {watch("coin_name")}
                     </Button>
                   </ModalFooter>
                 </form>
@@ -106,7 +122,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins }) => {
                 {coins.map((coin) => (
                   <button
                     key={coin.id}
-                    onClick={() => setValue("coin_id", coin.name)}
+                    onClick={() => handleCoinSelection(coin.name)}
                   >
                     {coin.name}
                   </button>
