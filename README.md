@@ -20,10 +20,13 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-Stack:
+## Stack:
+
+Core Dependencies:
 Next.js
-Supabase
-https://nextui.org/docs/guide/introduction
+Supabase w/ Postgres SQL
+Google OAuth
+Nextui
 Tailwind
 
 Public API:
@@ -31,6 +34,9 @@ Coincap
 
 Style Influence:
 Coinbase
+
+Hooks:
+React-hook-form
 
 AI Image Modeling:
 https://replicate.com/cjwbw/rembg

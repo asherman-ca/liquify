@@ -5,7 +5,8 @@ import NavTitle from "./ui/NavTitle";
 import BuySellButton from "./ui/BuySellButton";
 import NavSearchDropdown from "./NavSearchDropdown";
 import getCoins from "@/actions/getCoins";
-import BuySellModal from "./BuySellModal";
+import BuySellModal from "./buy-sell-form/BuySellModal";
+import getBalance from "@/actions/getBalance";
 
 const Nav = async () => {
   const supabase = createServerComponentClient({
@@ -15,6 +16,12 @@ const Nav = async () => {
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();
 
+  let balance;
+
+  if (sessionData.session) {
+    balance = await getBalance();
+  }
+
   const coins = await getCoins();
 
   return (
@@ -22,7 +29,9 @@ const Nav = async () => {
       <NavTitle />
       <div className="flex items-center gap-8">
         <NavSearchDropdown coins={coins} />
-        {sessionData.session && <BuySellModal coins={coins} />}
+        {sessionData.session && (
+          <BuySellModal coins={coins} balance={balance} />
+        )}
         <Dropdown user={sessionData.session} />
       </div>
     </div>
