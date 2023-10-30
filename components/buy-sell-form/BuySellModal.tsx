@@ -76,11 +76,16 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
     }
   };
 
-  const handleSizeChange = (e) => {
+  const handleSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const sanitizedValue = value.replace(/[,|$]/g, "");
-    setSize("$" + sanitizedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    setValue("value", Number(sanitizedValue));
+    if (value !== "") {
+      const sanitizedValue = value.replace(/[,|$]/g, "");
+      setSize("$" + sanitizedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+      setValue("value", Number(sanitizedValue));
+    } else {
+      setSize(value);
+      setValue("value", Number(value));
+    }
   };
 
   return (
@@ -124,13 +129,12 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                       Short
                     </button>
                   </ModalHeader>
-                  <ModalBody className="p-0">
+                  <ModalBody className="p-0 pt-4">
                     <div className="my-4 flex items-center justify-center overflow-hidden">
-                      {/* <Search className="h-8 w-8" /> */}
                       <input
                         className={`${inputField}`}
                         type="string"
-                        placeholder="0"
+                        placeholder="$0"
                         value={size}
                         onChange={handleSizeChange}
                       />
