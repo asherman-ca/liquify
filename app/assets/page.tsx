@@ -6,6 +6,7 @@ import getBalance from "@/actions/getBalance";
 import { moneyParse } from "@/libs/numbering";
 import { CircleDollarSign } from "lucide-react";
 import PositionTable from "./components/PositionTable";
+import BalanceHeader from "./components/BalanceHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +25,8 @@ const page = async () => {
       <div className="rounded-lg border-1 border-gray-300 bg-white">
         <div className="border-b-1 border-gray-300 p-4">
           <p className="text-gray-500">My cash</p>
-          <p className="text-lg font-medium">{moneyParse(balance)}</p>
+          <BalanceHeader initialBalance={balance} />
+          {/* <p className="text-lg font-medium">{moneyParse(balance)}</p> */}
         </div>
 
         <table className="w-full">
