@@ -8,13 +8,16 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Input,
 } from "@nextui-org/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import CoinForm from "./CoinForm";
 import Image from "next/image";
 import { moneyParse } from "@/libs/numbering";
-import { ChevronRight, Landmark } from "lucide-react";
+import { ChevronRight, Landmark, Search } from "lucide-react";
 import { cn } from "@/libs/utils";
+import styles from "./form.module.css";
+const { inputField } = styles;
 
 interface BuySellModalProps {
   coins: Coin[];
@@ -51,6 +54,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
       coin_price: moneyParse(Number(coins[0].priceUsd)),
     },
   });
+  const [size, setSize] = useState<string>("");
 
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
@@ -72,6 +76,13 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
     }
   };
 
+  const handleSizeChange = (e) => {
+    const { value } = e.target;
+    const sanitizedValue = value.replace(/[,|$]/g, "");
+    setSize("$" + sanitizedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    setValue("value", Number(sanitizedValue));
+  };
+
   return (
     <>
       <Button
@@ -81,12 +92,14 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
       >
         Buy & Sell
       </Button>
-
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         hideCloseButton
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          setSize("");
+        }}
       >
         <ModalContent>
           {(onClose) => (
@@ -111,12 +124,17 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                       Short
                     </button>
                   </ModalHeader>
-                  <ModalBody className="p-2">
-                    <input
-                      type="number"
-                      placeholder="0"
-                      {...register("value")}
-                    />
+                  <ModalBody className="p-0">
+                    <div className="my-4 flex items-center justify-center overflow-hidden">
+                      {/* <Search className="h-8 w-8" /> */}
+                      <input
+                        className={`${inputField}`}
+                        type="string"
+                        placeholder="0"
+                        value={size}
+                        onChange={handleSizeChange}
+                      />
+                    </div>
                     <div className="flex gap-6 px-4">
                       <Button
                         radius="full"
@@ -155,6 +173,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                         x100
                       </Button>
                     </div>
+                    <div className="my-4 h-[1px] bg-gray-300" />
                     <button
                       onClick={() => setOpen(true)}
                       className="hover:bg-primary-50 active:bg-primary-100 flex justify-between rounded-lg p-4"

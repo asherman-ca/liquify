@@ -1,0 +1,14 @@
+.inputField {
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 3rem;
+  width: auto;
+}
+
+.inputField::-webkit-outer-spin-button,
+.inputField::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
