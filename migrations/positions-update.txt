@@ -1,0 +1,2 @@
+ALTER TABLE positions
+ADD COLUMN size numeric generated always as (value * leverage) stored;

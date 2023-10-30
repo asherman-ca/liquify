@@ -9,6 +9,7 @@ declare interface Position {
   coin_price: number;
   value: number;
   direction: Direction;
+  leverage: number;
 }
 
 declare interface Coin {

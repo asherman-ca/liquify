@@ -19,6 +19,7 @@ import styles from "./form.module.css";
 const { inputField } = styles;
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface BuySellModalProps {
   coins: Coin[];
@@ -37,7 +38,7 @@ type Inputs = {
 
 const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
   const router = useRouter();
-  const user = useUser();
+  const { supabase, isLoading, user } = useUser();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [open, setOpen] = useState<boolean>(false);
   const {
@@ -59,17 +60,23 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
   const [size, setSize] = useState<string>("");
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { error: error1 } = await user?.supabase
-      .from("positions")
-      .insert(data);
+    const { error: error1 } = await supabase.from("positions").insert(data);
     if (!error1) {
-      const { error: error2 } = await user?.supabase
+      const { error: error2 } = await supabase
         .from("balances")
-        .update({ balance: user.balance - data.value })
-        .eq("user_id", user.user.id);
-      console.log(error2);
+        .update({ balance: balance - data.value })
+        .eq("user_id", user?.id);
+      setSize("");
+      setValue("value", 0);
+      if (error2) {
+        toast.error("Something went wrong");
+      } else {
+        toast.success("Position created");
+      }
+    } else {
+      toast.error("Something went wrong");
     }
-    router.refresh();
+    // router.refresh();
   };
 
   const handleCoinSelection = (coin: Coin) => {
@@ -130,6 +137,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                         watch("direction") === "short" && "border-b-1"
                       }`}
                       onClick={() => setValue("direction", "long")}
+                      type="button"
                     >
                       Long
                     </button>
@@ -138,6 +146,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                         watch("direction") === "long" && "border-b-1"
                       }`}
                       onClick={() => setValue("direction", "short")}
+                      type="button"
                     >
                       Short
                     </button>
@@ -232,8 +241,8 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                       <div className="flex items-center gap-4">
                         <div className="flex flex-col items-end">
                           <p>
-                            {user?.balance
-                              ? moneyParse(user.balance)
+                            {balance
+                              ? moneyParse(balance)
                               : moneyParse(balance!)}
                           </p>
                           <p className="text-gray-500">USD</p>

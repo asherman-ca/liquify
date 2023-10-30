@@ -6,17 +6,16 @@ import {
 } from "@supabase/auth-helpers-react";
 import { createContext, useContext, useEffect, useState } from "react";
 
-interface ReturnedUser extends User {
-  balance: number;
-}
-
 type UserContextType = {
-  user: ReturnedUser | null;
+  balance: number | null;
+  user: User | null;
   isLoading: boolean;
   supabase: any;
 };
 
-export const UserContext = createContext<UserContextType | null>(null);
+export const UserContext = createContext<UserContextType | undefined>(
+  undefined,
+);
 
 interface Props {
   [propName: string]: any;
@@ -30,7 +29,7 @@ export const MyUserContextProvider = (props: Props) => {
   } = useSessionContext();
   const supauser = useSupaUser();
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(isLoadingUser);
+  // const [isLoading, setIsLoading] = useState<boolean>(isLoadingUser);
   const getBalance = () =>
     supabase.from("balances").select("balance").eq("user_id", supauser!.id);
   const [balance, setBalance] = useState<number | null>(null);
@@ -42,13 +41,13 @@ export const MyUserContextProvider = (props: Props) => {
       getBalance().then((res) => {
         setBalance(res.data![0].balance);
       });
-      setIsLoading(false);
+      // setIsLoading(false);
     } else {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   }, [session]);
 
-  const res = {
+  const res: UserContextType = {
     user,
     isLoading: isLoadingUser,
     supabase,

@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
-const getBalance = async (): Promise<number> => {
+const getPositions = async (): Promise<any> => {
   const supabase = createServerComponentClient({
     cookies: cookies,
   });
@@ -11,17 +11,15 @@ const getBalance = async (): Promise<number> => {
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();
 
-  if (sessionData.session === null) return 99;
+  if (sessionData.session === null) return null;
 
   const { data } = await supabase
-    .from("balances")
-    .select("balance")
-    .eq("user_id", sessionData.session.user.id);
+    .from("positions")
+    .select("*")
+    .eq("user_id", sessionData.session?.user.id)
+    .order("created_at", { ascending: false });
 
-  console.log("data", data);
-  if (!data) return 99;
-
-  return data![0].balance;
+  return data;
 };
 
-export default getBalance;
+export default getPositions;
