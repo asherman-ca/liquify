@@ -15,6 +15,8 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
 
+  const inputBg = open ? "" : "";
+
   const filteredCoins =
     search === ""
       ? coins
@@ -65,7 +67,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
           setSearch(e.target.value);
         }}
         startContent={<Search className="h-5 w-5" strokeWidth={3} />}
-        className="relative min-w-[250px]"
+        className="relative z-10 min-w-[250px]"
       />
       {open && (
         <div
