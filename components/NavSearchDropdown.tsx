@@ -72,12 +72,12 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
       {open && (
         <div
           id="coin dropdown"
-          className="scrollbar-hide absolute top-[100%] z-10 mt-4 flex max-h-[490px] w-full flex-col overflow-auto rounded-lg bg-white p-2 shadow-xl"
+          className="scrollbar-hide absolute top-[100%] z-10 mt-4 flex max-h-[490px] w-full flex-col overflow-auto rounded-lg bg-white p-2 shadow-xl dark:bg-[#18181B]"
         >
           {filteredCoins.map((coin) => (
             <button
               id={coin.id}
-              className="flex items-center justify-between rounded-md p-4 hover:bg-gray-100"
+              className="hover:bg-primary-50 flex items-center justify-between rounded-md p-4 text-black dark:text-white dark:hover:text-white"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                 handleClick(e)
               }
@@ -90,7 +90,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
                   width={24}
                   className="h-6 w-6"
                 />
-                <p className="text-medium truncate pr-4 font-semibold">
+                <p className="text-medium truncate pr-4 font-medium">
                   {coin.name}
                 </p>
               </div>

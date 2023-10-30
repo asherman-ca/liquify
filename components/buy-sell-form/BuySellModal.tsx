@@ -132,7 +132,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                   <ModalBody className="p-0 pt-4">
                     <div className="my-4 flex items-center justify-center overflow-hidden">
                       <input
-                        className={`${inputField}`}
+                        className={`${inputField} dark:bg-[#18181B]`}
                         type="string"
                         placeholder="$0"
                         value={size}
