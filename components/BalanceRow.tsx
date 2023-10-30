@@ -10,13 +10,10 @@ const BalanceRow: FC<BalanceRowProps> = ({ initialBalance }) => {
   const [balance, setBalance] = useState<number>(initialBalance);
 
   useEffect(() => {
-    // let id = setInterval(() => {
-    //   setBalance((prev) => prev + 1000);
-    // }, 20000);
-    // return () => {
-    //   clearInterval(id);
-    // };
-  }, []);
+    setBalance(initialBalance);
+  }, [initialBalance]);
+
+  console.log(initialBalance);
 
   return (
     <div className="border-b-1 border-gray-300 px-10 py-6">

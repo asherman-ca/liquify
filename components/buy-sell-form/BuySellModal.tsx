@@ -8,7 +8,6 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Input,
 } from "@nextui-org/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import CoinForm from "./CoinForm";
@@ -18,6 +17,8 @@ import { ChevronRight, Landmark, Search } from "lucide-react";
 import { cn } from "@/libs/utils";
 import styles from "./form.module.css";
 const { inputField } = styles;
+import { useUser } from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 interface BuySellModalProps {
   coins: Coin[];
@@ -35,10 +36,11 @@ type Inputs = {
 };
 
 const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
+  const router = useRouter();
+  const user = useUser();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [open, setOpen] = useState<boolean>(false);
   const {
-    register,
     handleSubmit,
     formState: { errors },
     setValue,
@@ -51,12 +53,24 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
       value: 0,
       leverage: 1,
       coin_symbol: "BTC",
-      coin_price: moneyParse(Number(coins[0].priceUsd)),
+      coin_price: coins[0].priceUsd,
     },
   });
   const [size, setSize] = useState<string>("");
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { error: error1 } = await user?.supabase
+      .from("positions")
+      .insert(data);
+    if (!error1) {
+      const { error: error2 } = await user?.supabase
+        .from("balances")
+        .update({ balance: user.balance - data.value })
+        .eq("user_id", user.user.id);
+      console.log(error2);
+    }
+    router.refresh();
+  };
 
   const handleCoinSelection = (coin: Coin) => {
     const { name, symbol } = coin;
@@ -68,7 +82,6 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
   };
 
   const handleLeverageSelection = (leverage: number) => {
-    console.log(watch("leverage"));
     if (watch("leverage") === leverage) {
       setValue("leverage", 1);
     } else {
@@ -113,7 +126,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <ModalHeader className="flex p-0">
                     <button
-                      className={`border-r-1 hover:bg-primary-50 flex-1 border-gray-300 p-4 text-center ${
+                      className={`flex-1 border-r-1 border-gray-300 p-4 text-center hover:bg-primary-50 ${
                         watch("direction") === "short" && "border-b-1"
                       }`}
                       onClick={() => setValue("direction", "long")}
@@ -121,7 +134,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                       Long
                     </button>
                     <button
-                      className={`hover:bg-primary-50 flex-1 border-gray-300 p-4 text-center ${
+                      className={`flex-1 border-gray-300 p-4 text-center hover:bg-primary-50 ${
                         watch("direction") === "long" && "border-b-1"
                       }`}
                       onClick={() => setValue("direction", "short")}
@@ -180,7 +193,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                     <div className="my-4 h-[1px] bg-gray-300" />
                     <button
                       onClick={() => setOpen(true)}
-                      className="hover:bg-primary-50 active:bg-primary-100 flex justify-between rounded-lg p-4"
+                      className="flex justify-between rounded-lg p-4 hover:bg-primary-50 active:bg-primary-100"
                     >
                       <div className="flex items-center gap-4">
                         <Image
@@ -207,7 +220,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                     </button>
                     <button
                       disabled
-                      className="hover:bg-primary-50 flex justify-between rounded-lg p-4"
+                      className="flex justify-between rounded-lg p-4 hover:bg-primary-50"
                     >
                       <div className="flex items-center gap-4">
                         <Landmark className="h-10 w-10" />
@@ -218,7 +231,11 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="flex flex-col items-end">
-                          <p>{moneyParse(balance!)}</p>
+                          <p>
+                            {user?.balance
+                              ? moneyParse(user.balance)
+                              : moneyParse(balance!)}
+                          </p>
                           <p className="text-gray-500">USD</p>
                         </div>
                         <ChevronRight />

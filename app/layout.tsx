@@ -6,6 +6,7 @@ import SupabaseProvider from "@/providers/SupabaseProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
 import Sidebar from "@/components/Sidebar";
 import Content from "@/components/Content";
+import { MyUserContextProvider } from "@/hooks/useUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +25,11 @@ export default function RootLayout({
       <body className={`${inter.className} flex h-screen`}>
         <ThemeProvider>
           <SupabaseProvider>
-            <Sidebar className="p-8">
-              <Content>{children}</Content>
-            </Sidebar>
+            <MyUserContextProvider>
+              <Sidebar className="p-8">
+                <Content>{children}</Content>
+              </Sidebar>
+            </MyUserContextProvider>
           </SupabaseProvider>
         </ThemeProvider>
       </body>
