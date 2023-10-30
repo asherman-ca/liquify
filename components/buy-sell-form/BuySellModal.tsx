@@ -43,11 +43,11 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
   } = useForm<Inputs>({
     defaultValues: {
       coin_name: "Bitcoin",
-      coin_id: "btc",
+      coin_id: "bitcoin",
       direction: "long",
       value: 0,
       leverage: 1,
-      coin_symbol: "btc",
+      coin_symbol: "BTC",
       coin_price: moneyParse(Number(coins[0].priceUsd)),
     },
   });
@@ -59,6 +59,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
     setValue("coin_name", name);
     setValue("coin_symbol", symbol);
     setValue("coin_price", Number(coin.priceUsd));
+    setValue("coin_id", coin.id);
     setOpen(false);
   };
 
@@ -175,7 +176,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="flex flex-col items-end">
-                          <p>{watch("coin_price")}</p>
+                          <p>{moneyParse(Number(watch("coin_price")))}</p>
                           <p className="text-gray-500">Price</p>
                         </div>
                         <ChevronRight />
@@ -194,8 +195,8 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="flex flex-col items-end">
-                          <p>{moneyParse(balance)}</p>
-                          <p className="text-gray-500">Price</p>
+                          <p>{moneyParse(balance!)}</p>
+                          <p className="text-gray-500">USD</p>
                         </div>
                         <ChevronRight />
                       </div>
@@ -217,6 +218,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                   coins={coins}
                   setOpen={setOpen}
                   handleCoinSelection={handleCoinSelection}
+                  coinId={watch("coin_id")}
                 />
               )}
             </>

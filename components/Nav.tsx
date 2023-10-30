@@ -16,7 +16,7 @@ const Nav = async () => {
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();
 
-  let balance;
+  let balance: number;
 
   if (sessionData.session) {
     balance = await getBalance();
@@ -30,7 +30,7 @@ const Nav = async () => {
       <div className="flex items-center gap-8">
         <NavSearchDropdown coins={coins} />
         {sessionData.session && (
-          <BuySellModal coins={coins} balance={balance} />
+          <BuySellModal coins={coins} balance={balance!} />
         )}
         <Dropdown user={sessionData.session} />
       </div>
