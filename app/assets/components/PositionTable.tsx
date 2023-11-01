@@ -2,6 +2,13 @@
 import { useUser } from "@/hooks/useUser";
 import { FC, useEffect, useState } from "react";
 import PositionItem from "./PositionItem";
+import { moneyParse } from "@/libs/numbering";
+
+const calcTotalSize = (positions: Position[]) => {
+  return positions.reduce((acc, position) => {
+    return acc + position.size;
+  }, 0);
+};
 
 interface PositionTableProps {
   initialPositions: Position[];
@@ -52,23 +59,31 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
   }, [user]);
 
   return (
-    <table className="w-full">
-      <thead>
-        <tr className="text-left">
-          <th className="p-4">Name</th>
-          <th>Size</th>
-          <th>PNL</th>
-          <th>Leverage</th>
-          <th>Entry</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {positions.map((position: Position) => (
-          <PositionItem position={position} key={position.id} />
-        ))}
-      </tbody>
-    </table>
+    <div className="rounded-lg border-1 border-gray-300 bg-white">
+      <div className="flex flex-col gap-1 border-b-1 border-gray-300 p-4">
+        <p className="text-gray-500">My positions</p>
+        <p className="text-lg font-medium">
+          {moneyParse(calcTotalSize(positions))}
+        </p>
+      </div>
+      <table className="w-full">
+        <thead>
+          <tr className="text-left">
+            <th className="p-4">Name</th>
+            <th>Size</th>
+            <th>PNL</th>
+            <th>Leverage</th>
+            <th>Entry</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {positions.map((position: Position) => (
+            <PositionItem position={position} key={position.id} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

@@ -33,8 +33,20 @@ const PositionItem: FC<PositionItemProps> = ({ position }) => {
       </td>
       <td>{position.leverage}x</td>
       <td>{moneyParse(position.coin_price)}</td>
-      <td className={`${position.closed ? "text-red-500" : "text-green-500"}`}>
-        {position.closed ? "closed" : "open"}
+      <td>
+        <span
+          className={`${position.closed ? "text-red-500" : "text-green-500"}`}
+        >
+          {position.closed ? "closed" : "open"}
+        </span>{" "}
+        -{" "}
+        <span
+          className={`${
+            position.direction === "short" ? "text-red-500" : "text-green-500"
+          }`}
+        >
+          {position.direction}
+        </span>
       </td>
     </tr>
   );

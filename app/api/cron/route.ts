@@ -61,24 +61,38 @@ export async function GET() {
             .eq("id", position.id);
         }
       } else {
-        // console.log("short");
+        // Short cases
         if (percentageChange > 0) {
-          const convertedPercentageChange = Math.abs(percentageChange) * 0.01;
+          // const convertedPercentageChange = Math.abs(percentageChange) * 0.01;
           if (convertedPercentageChange * position.size > position.value) {
-            // close position
+            const { data, error } = await supabaseAdmin
+              .from("positions")
+              .update({
+                size: initialSize - position.value,
+                closed: true,
+                pnl: -position.value,
+              })
+              .eq("id", position.id);
           } else {
-            // update current value
+            const { data, error } = await supabaseAdmin
+              .from("positions")
+              .update({
+                size: initialSize - convertedPercentageChange * initialSize,
+                pnl: -convertedPercentageChange * initialSize,
+              })
+              .eq("id", position.id);
           }
         } else {
-          // update current value
+          const { data, error } = await supabaseAdmin
+            .from("positions")
+            .update({
+              size: initialSize + convertedPercentageChange * initialSize,
+              pnl: convertedPercentageChange * initialSize,
+            })
+            .eq("id", position.id);
         }
       }
-      // console.log("coin", coin.name);
-      // console.log("positionPrice", positionPrice);
-      // console.log("change", percentageChange);
     });
-
-    // console.log("positions", positions);
 
     return NextResponse.json({
       status: 200,
