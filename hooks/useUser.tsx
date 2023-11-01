@@ -1,15 +1,11 @@
 "use client";
 import { User } from "@supabase/auth-helpers-nextjs";
-import {
-  useSessionContext,
-  useUser as useSupaUser,
-} from "@supabase/auth-helpers-react";
+import { useSessionContext } from "@supabase/auth-helpers-react";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type UserContextType = {
   balance: number | null;
   user: User | null;
-  isLoading: boolean;
   supabase: any;
 };
 
@@ -27,35 +23,55 @@ export const MyUserContextProvider = (props: Props) => {
     isLoading: isLoadingUser,
     supabaseClient: supabase,
   } = useSessionContext();
-  const supauser = useSupaUser();
   const [user, setUser] = useState<User | null>(null);
-  // const [isLoading, setIsLoading] = useState<boolean>(isLoadingUser);
-  const getBalance = () =>
-    supabase.from("balances").select("balance").eq("user_id", supauser!.id);
   const [balance, setBalance] = useState<number | null>(null);
 
   useEffect(() => {
+    let unsub: any = null;
     if (session) {
       const { user } = session;
       setUser(user);
-      getBalance().then((res) => {
-        setBalance(res.data![0].balance);
-      });
-      // setIsLoading(false);
-    } else {
-      // setIsLoading(false);
+      supabase
+        .from("balances")
+        .select("balance")
+        .eq("user_id", user.id)
+        .then((res) => {
+          setBalance(res.data![0].balance);
+        });
+      unsub = supabase
+        .channel("custom-update-channel")
+        .on(
+          "postgres_changes",
+          {
+            event: "UPDATE",
+            schema: "public",
+            table: "balances",
+            filter: `user_id=eq.${user?.id}`,
+          },
+          (payload: any) => {
+            console.log("Change received!", payload);
+            setBalance(payload.new.balance);
+          },
+        )
+        .subscribe();
     }
+    return () => {
+      if (unsub) {
+        supabase.removeChannel(unsub);
+      }
+    };
   }, [session]);
 
   const res: UserContextType = {
     user,
-    isLoading: isLoadingUser,
     supabase,
     balance,
   };
 
   return (
-    <UserContext.Provider value={res}>{props.children}</UserContext.Provider>
+    <UserContext.Provider value={res} {...props} />
+    //   {props.children}
+    // </UserContext.Provider>
   );
 };
 

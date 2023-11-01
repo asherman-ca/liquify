@@ -15,8 +15,6 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
 
-  const inputBg = open ? "" : "";
-
   const filteredCoins =
     search === ""
       ? coins
@@ -24,21 +22,21 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
           return coin.name.toLowerCase().includes(search.toLowerCase());
         });
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        componentRef.current &&
-        !componentRef.current.contains(event.target as Node)
-      ) {
-        console.log("Clicked outside the component");
-        setOpen(false);
-      }
-    }
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  // useEffect(() => {
+  //   function handleClickOutside(event: MouseEvent) {
+  //     if (
+  //       componentRef.current &&
+  //       !componentRef.current.contains(event.target as Node)
+  //     ) {
+  //       console.log("Clicked outside the component");
+  //       setOpen(false);
+  //     }
+  //   }
+  //   document.addEventListener("click", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setOpen(false);
@@ -72,12 +70,12 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
       {open && (
         <div
           id="coin dropdown"
-          className="scrollbar-hide absolute top-[100%] z-10 mt-4 flex max-h-[490px] w-full flex-col overflow-auto rounded-lg bg-white p-2 shadow-xl dark:bg-[#18181B]"
+          className="absolute top-[100%] z-10 mt-4 flex max-h-[490px] w-full flex-col overflow-auto rounded-lg bg-white p-2 shadow-xl scrollbar-hide dark:bg-[#18181B]"
         >
           {filteredCoins.map((coin) => (
             <button
               id={coin.id}
-              className="hover:bg-primary-50 flex items-center justify-between rounded-md p-4 text-black dark:text-white dark:hover:text-white"
+              className="flex items-center justify-between rounded-md p-4 text-black hover:bg-primary-50 dark:text-white dark:hover:text-white"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                 handleClick(e)
               }
@@ -90,7 +88,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
                   width={24}
                   className="h-6 w-6"
                 />
-                <p className="text-medium truncate pr-4 font-medium">
+                <p className="truncate pr-4 text-medium font-medium">
                   {coin.name}
                 </p>
               </div>

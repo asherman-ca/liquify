@@ -13,7 +13,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import CoinForm from "./CoinForm";
 import Image from "next/image";
 import { moneyParse } from "@/libs/numbering";
-import { ChevronRight, Landmark, Search } from "lucide-react";
+import { ChevronRight, Landmark } from "lucide-react";
 import { cn } from "@/libs/utils";
 import styles from "./form.module.css";
 const { inputField } = styles;
@@ -37,8 +37,7 @@ type Inputs = {
 };
 
 const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
-  const router = useRouter();
-  const { supabase, isLoading, user } = useUser();
+  const { supabase, user, balance: curBalance } = useUser();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [open, setOpen] = useState<boolean>(false);
   const {
@@ -62,9 +61,10 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { error: error1 } = await supabase.from("positions").insert(data);
     if (!error1) {
+      console.log("data", data);
       const { error: error2 } = await supabase
         .from("balances")
-        .update({ balance: balance - data.value })
+        .update({ balance: curBalance - data.value })
         .eq("user_id", user?.id);
       setSize("");
       setValue("value", 0);
@@ -240,11 +240,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="flex flex-col items-end">
-                          <p>
-                            {balance
-                              ? moneyParse(balance)
-                              : moneyParse(balance!)}
-                          </p>
+                          <p>{moneyParse(curBalance || balance)}</p>
                           <p className="text-gray-500">USD</p>
                         </div>
                         <ChevronRight />
