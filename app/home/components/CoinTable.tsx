@@ -29,7 +29,7 @@ const CoinTable: FC<CoinTableProps> = ({ initialCoins }) => {
   useEffect(() => {
     let id = setInterval(() => {
       console.log("fetches coins");
-      getCoins().then(() => setCoins(coins));
+      getCoins().then((coins) => setCoins(coins));
     }, 60000);
 
     return () => {
