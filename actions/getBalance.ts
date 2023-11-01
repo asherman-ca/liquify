@@ -18,7 +18,6 @@ const getBalance = async (): Promise<number> => {
     .select("balance")
     .eq("user_id", sessionData.session.user.id);
 
-  console.log("data", data);
   if (!data) return 99;
 
   return data![0].balance;

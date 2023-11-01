@@ -64,7 +64,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
       console.log("data", data);
       const { error: error2 } = await supabase
         .from("balances")
-        .update({ balance: curBalance - data.value })
+        .update({ balance: curBalance! - data.value })
         .eq("user_id", user?.id);
       setSize("");
       setValue("value", 0);

@@ -9,30 +9,35 @@ interface PositionTableProps {
 
 const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
   const [positions, setPositions] = useState<Position[]>(initialPositions);
-  const { supabase, isLoading, user } = useUser();
+  const { supabase, user } = useUser();
 
   useEffect(() => {
-    const channel = supabase
-      .channel("custom-insert-channel")
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "positions",
-          filter: `user_id=eq.${user?.id}`,
-        },
-        (payload: any) => {
-          console.log(payload);
-          setPositions((positions) => [payload.new, ...positions]);
-        },
-      )
-      .subscribe();
+    let unsub: any = null;
+    if (user) {
+      unsub = supabase
+        .channel("custom-insert-channel")
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "positions",
+            filter: `user_id=eq.${user?.id}`,
+          },
+          (payload: any) => {
+            console.log(payload);
+            setPositions((positions) => [payload.new, ...positions]);
+          },
+        )
+        .subscribe();
+    }
 
     return () => {
-      supabase.removeChannel(channel);
+      if (unsub) {
+        supabase.removeChannel(unsub);
+      }
     };
-  }, [isLoading, user]);
+  }, [user]);
 
   return (
     <table className="w-full">

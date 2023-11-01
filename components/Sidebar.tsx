@@ -42,7 +42,7 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
       <div
         id="sidebar"
         {...props}
-        className="border-r-1 flex flex-col gap-4 border-gray-300 p-4"
+        className="flex flex-col gap-4 border-r-1 border-gray-300 p-4"
       >
         <Link href={"/"}>
           <Image
@@ -70,6 +70,15 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
               {link.title}
             </Link>
           ))}
+          <button
+            onClick={() => {
+              fetch("/api/cron", {
+                method: "GET",
+              });
+            }}
+          >
+            liquify
+          </button>
         </div>
       </div>
       {children}
