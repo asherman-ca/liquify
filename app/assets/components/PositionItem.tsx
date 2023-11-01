@@ -7,6 +7,7 @@ interface PositionItemProps {
 }
 
 const PositionItem: FC<PositionItemProps> = ({ position }) => {
+  console.log(position);
   return (
     <tr className="w-full border-t-1 border-gray-300">
       <td className="p-4">
@@ -24,8 +25,17 @@ const PositionItem: FC<PositionItemProps> = ({ position }) => {
           </div>
         </div>
       </td>
-      <td>{moneyParse(position.value * position.leverage)}</td>
+      <td>{moneyParse(position.size)}</td>
+      <td className={`${position.pnl < 0 && "text-red-500"}`}>
+        {position.pnl < 0
+          ? `-${moneyParse(Math.abs(position.pnl))}`
+          : moneyParse(position.pnl)}
+      </td>
       <td>{position.leverage}x</td>
+      <td>{moneyParse(position.coin_price)}</td>
+      <td className={`${position.closed ? "text-red-500" : "text-green-500"}`}>
+        {position.closed ? "closed" : "open"}
+      </td>
     </tr>
   );
 };

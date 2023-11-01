@@ -59,7 +59,9 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
   const [size, setSize] = useState<string>("");
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { error: error1 } = await supabase.from("positions").insert(data);
+    const { error: error1 } = await supabase
+      .from("positions")
+      .insert({ ...data, size: data.value * data.leverage });
     if (!error1) {
       console.log("data", data);
       const { error: error2 } = await supabase

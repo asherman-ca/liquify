@@ -15,18 +15,30 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
     let unsub: any = null;
     if (user) {
       unsub = supabase
-        .channel("custom-insert-channel")
+        .channel("custom-all-channel")
         .on(
           "postgres_changes",
           {
-            event: "INSERT",
+            event: "*",
             schema: "public",
             table: "positions",
             filter: `user_id=eq.${user?.id}`,
           },
           (payload: any) => {
-            console.log(payload);
-            setPositions((positions) => [payload.new, ...positions]);
+            if (payload.eventType === "UPDATE") {
+              console.log(payload);
+              setPositions((positions) =>
+                positions.map((position) => {
+                  if (position.id === payload.new.id) {
+                    return payload.new;
+                  } else {
+                    return position;
+                  }
+                }),
+              );
+            } else {
+              setPositions((positions) => [payload.new, ...positions]);
+            }
           },
         )
         .subscribe();
@@ -45,7 +57,10 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
         <tr className="text-left">
           <th className="p-4">Name</th>
           <th>Size</th>
+          <th>PNL</th>
           <th>Leverage</th>
+          <th>Entry</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>

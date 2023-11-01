@@ -10,6 +10,9 @@ declare interface Position {
   value: number;
   direction: Direction;
   leverage: number;
+  closed: boolean;
+  size: number;
+  pnl: number;
 }
 
 declare interface Coin {
