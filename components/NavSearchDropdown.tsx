@@ -74,6 +74,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
         >
           {filteredCoins.map((coin) => (
             <button
+              key={coin.id}
               id={coin.id}
               className="flex items-center justify-between rounded-md p-4 text-black hover:bg-primary-50 dark:text-white dark:hover:text-white"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
@@ -82,7 +83,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
             >
               <div className="flex items-center gap-2 ">
                 <Image
-                  src={`/icon/${coin.symbol}.png`}
+                  src={`/icon/${coin.symbol.toLowerCase()}.png`}
                   alt="logo"
                   height={24}
                   width={24}

@@ -55,7 +55,7 @@ const CoinForm: FC<CoinFormProps> = ({
           >
             <div className="flex items-center gap-4">
               <Image
-                src={`/icon/${coin.symbol}.png`}
+                src={`/icon/${coin.symbol.toLowerCase()}.png`}
                 alt={coin.name}
                 width={24}
                 height={24}
