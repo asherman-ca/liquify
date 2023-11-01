@@ -52,7 +52,7 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
       direction: "long",
       value: 0,
       leverage: 1,
-      coin_symbol: "BTC",
+      coin_symbol: "btc",
       coin_price: coins[0].priceUsd,
     },
   });
@@ -206,7 +206,9 @@ const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
                     >
                       <div className="flex items-center gap-4">
                         <Image
-                          src={`/icon/${watch("coin_symbol")}.png`}
+                          src={`/icon/${watch(
+                            "coin_symbol",
+                          ).toLowerCase()}.png`}
                           alt={watch("coin_name")}
                           width={24}
                           height={24}

@@ -18,15 +18,12 @@ const CoinForm: FC<CoinFormProps> = ({
   coinId,
 }) => {
   const [filter, setFilter] = useState<string>("");
-  console.log(coins);
-  console.log(coinId);
-
   const filteredCoins = coins.filter((coin) => {
     return coin.name.toLowerCase().includes(filter.toLowerCase());
   });
 
   return (
-    <div className="scrollbar-hide flex h-[590px] flex-col gap-4 overflow-auto p-4">
+    <div className="flex h-[590px] flex-col gap-4 overflow-auto p-4 scrollbar-hide">
       <div id="title" className="relative">
         <ArrowLeft
           onClick={() => setOpen(false)}
@@ -50,7 +47,7 @@ const CoinForm: FC<CoinFormProps> = ({
             key={coin.id}
             onClick={() => handleCoinSelection(coin)}
             className={cn(
-              `hover:bg-primary-50 active:bg-primary-100 flex w-full items-center justify-between gap-4 rounded-md px-4 py-2`,
+              `flex w-full items-center justify-between gap-4 rounded-md px-4 py-2 hover:bg-primary-50 active:bg-primary-100`,
               {
                 "bg-primary-50": coinId === coin.id,
               },
@@ -66,7 +63,7 @@ const CoinForm: FC<CoinFormProps> = ({
               />
               <div className="flex flex-col items-start">
                 <p>{coin.name}</p>
-                <p className="text-gray-500">{coin.symbol}</p>
+                <p className="text-gray-500">{coin.symbol.toLowerCase()}</p>
               </div>
             </div>
             {coinId === coin.id && <Check className="text-primary-500" />}
