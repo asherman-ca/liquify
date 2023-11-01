@@ -8,6 +8,8 @@ import getCoins from "@/actions/getCoins";
 import BuySellModal from "./buy-sell-form/BuySellModal";
 import getBalance from "@/actions/getBalance";
 
+export const dynamic = "force-dynamic";
+
 const Nav = async () => {
   const supabase = createServerComponentClient({
     cookies: cookies,

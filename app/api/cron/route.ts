@@ -29,12 +29,25 @@ export async function GET() {
         if (percentageChange < 0) {
           const convertedPercentageChange = Math.abs(percentageChange) * 0.01;
           if (convertedPercentageChange * position.size > position.value) {
-            // console.log(position.value);
+            // close position
+          } else {
+            // update current value
           }
+        } else {
+          // update current value
         }
-        // console.log("long");
       } else {
         // console.log("short");
+        if (percentageChange > 0) {
+          const convertedPercentageChange = Math.abs(percentageChange) * 0.01;
+          if (convertedPercentageChange * position.size > position.value) {
+            // close position
+          } else {
+            // update current value
+          }
+        } else {
+          // update current value
+        }
       }
       // console.log("coin", coin.name);
       // console.log("positionPrice", positionPrice);
