@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const getURL = () => {
-  let url =
-    process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
-    process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
-    "http://localhost:3000/";
+  let url = process?.env?.NEXT_PUBLIC_SITE_URL;
+  // ?? // Set this to your site URL in production env.
+  // process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
+  // "http://localhost:3000/";
 
   // Make sure to include https:// when not localhost.
   url = url.includes("http") ? url : `https://${url}`;
@@ -60,7 +60,7 @@ export default function Login() {
 
   return (
     <div className="flex justify-center pt-32">
-      <div className="border-1 flex flex-col gap-8 rounded-md border-gray-300 p-8">
+      <div className="flex flex-col gap-8 rounded-md border-1 border-gray-300 p-8">
         <h1 className="text-2xl font-semibold text-blue-500">liquify</h1>
         <div className="flex flex-col gap-2">
           <h2 className="text-2xl font-semibold">Sign in to Liquify</h2>
@@ -89,7 +89,7 @@ export default function Login() {
         </div>
         <div className="relative flex justify-center">
           <p className="bg-white p-2 text-center text-sm">OR</p>
-          <div className="border-b-1 absolute left-0 top-[50%] -z-10 w-full border-gray-300"></div>
+          <div className="absolute left-0 top-[50%] -z-10 w-full border-b-1 border-gray-300"></div>
         </div>
         <Button
           variant="ghost"
