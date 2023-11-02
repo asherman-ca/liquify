@@ -70,7 +70,7 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
               {link.title}
             </Link>
           ))}
-          <button
+          {/* <button
             onClick={() => {
               fetch("/api/cron", {
                 method: "GET",
@@ -78,7 +78,7 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
             }}
           >
             liquify
-          </button>
+          </button> */}
         </div>
       </div>
       {children}

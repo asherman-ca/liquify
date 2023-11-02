@@ -6,7 +6,21 @@ import { moneyParse } from "@/libs/numbering";
 
 const calcTotalSize = (positions: Position[]) => {
   return positions.reduce((acc, position) => {
-    return acc + position.size;
+    if (position.closed) {
+      return acc;
+    } else {
+      return acc + position.size;
+    }
+  }, 0);
+};
+
+const calcTotalLoss = (positions: Position[]) => {
+  return positions.reduce((acc, position) => {
+    if (position.closed) {
+      return acc + position.pnl;
+    } else {
+      return acc;
+    }
   }, 0);
 };
 
@@ -60,11 +74,23 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
 
   return (
     <div className="rounded-lg border-1 border-gray-300 bg-white">
-      <div className="flex flex-col gap-1 border-b-1 border-gray-300 p-4">
-        <p className="text-gray-500">My positions</p>
-        <p className="text-lg font-medium">
-          {moneyParse(calcTotalSize(positions))}
-        </p>
+      <div className="flex border-b-1 border-gray-300 p-4">
+        <div className="flex w-[15%] flex-col gap-1">
+          <p className="text-gray-500">Open Interest</p>
+          <p className="text-lg font-medium">
+            {moneyParse(calcTotalSize(positions))}
+          </p>
+        </div>
+        <div className="flex w-[15%] flex-col gap-1">
+          <p className="text-gray-500">Total Loss</p>
+          <p className="text-lg font-medium text-red-500">
+            {moneyParse(Math.abs(calcTotalLoss(positions)))}
+          </p>
+        </div>
+        <div className="h-full! flex w-[15%] flex-col justify-between">
+          <p className="text-gray-500">Total Gains</p>
+          <div className="text-xl">🎰💩🎰💩</div>
+        </div>
       </div>
       <table className="w-full">
         <thead>

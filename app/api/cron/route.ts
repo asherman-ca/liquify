@@ -25,11 +25,6 @@ export async function GET() {
       const convertedPercentageChange = Math.abs(percentageChange) * 0.01;
       const initialSize = position.value * position.leverage;
 
-      console.log(position.coin_name);
-      console.log("cur", currentPrice);
-      console.log("pos", positionPrice);
-      console.log(percentageChange);
-
       if (position.direction === "long") {
         if (percentageChange < 0) {
           if (convertedPercentageChange * position.size > position.value) {
@@ -61,9 +56,7 @@ export async function GET() {
             .eq("id", position.id);
         }
       } else {
-        // Short cases
         if (percentageChange > 0) {
-          // const convertedPercentageChange = Math.abs(percentageChange) * 0.01;
           if (convertedPercentageChange * position.size > position.value) {
             const { data, error } = await supabaseAdmin
               .from("positions")

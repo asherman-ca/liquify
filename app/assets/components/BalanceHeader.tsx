@@ -23,7 +23,7 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({ initialBalance }) => {
       <table className="w-full">
         <thead>
           <tr className="border-b-1 border-gray-300">
-            <th className="p-4 text-left">Name</th>
+            <th className="w-[15%] p-4 text-left">Name</th>
             <th className="text-left">Total balance</th>
           </tr>
         </thead>
