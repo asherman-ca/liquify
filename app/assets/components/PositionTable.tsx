@@ -23,28 +23,19 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
   const { positions, supabase, balance, user } = useUser();
   const displayPositions = positions || initialPositions;
   const handleSell = async (position: Position) => {
-    console.log("hits");
-    console.log("pos", position);
     const { error } = await supabase
       .from("positions")
       .update({
         closed: true,
       })
       .eq("id", position.id);
-
-    // const { error } = await supabase
-    //   .from("positions")
-    //   .delete()
-    //   .eq("id", position.id);
-
-    console.log("res", error);
     if (error) {
       toast.error("Something went wrong");
       return console.log(error);
     }
     const { error: error2 } = await supabase
       .from("balances")
-      .update({ balance: balance! + position.pnl })
+      .update({ balance: balance! + position.pnl + position.value })
       .eq("user_id", user!.id);
     if (error2) {
       toast.error("Something went wrong");
