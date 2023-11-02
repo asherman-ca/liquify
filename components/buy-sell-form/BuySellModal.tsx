@@ -18,7 +18,6 @@ import { cn } from "@/libs/utils";
 import styles from "./form.module.css";
 const { inputField } = styles;
 import { useUser } from "@/hooks/useUser";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface BuySellModalProps {

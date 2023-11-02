@@ -61,7 +61,7 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
               className={cn(
                 "flex items-center gap-4 rounded-full p-4 font-medium hover:bg-gray-100 dark:hover:bg-blue-950 dark:hover:text-white",
                 {
-                  "text-blue-700 dark:bg-blue-950 dark:text-blue-500 dark:hover:text-white":
+                  "bg-primary-50 text-blue-700  dark:text-blue-500 dark:hover:text-white":
                     pathname === link.url,
                 },
               )}

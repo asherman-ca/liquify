@@ -1,8 +1,9 @@
 "use client";
 import { useUser } from "@/hooks/useUser";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import PositionItem from "./PositionItem";
 import { moneyParse } from "@/libs/numbering";
+import { toast } from "sonner";
 
 const calcTotalSize = (positions: Position[]) => {
   return positions.reduce((acc, position) => {
@@ -14,63 +15,43 @@ const calcTotalSize = (positions: Position[]) => {
   }, 0);
 };
 
-const calcTotalLoss = (positions: Position[]) => {
-  return positions.reduce((acc, position) => {
-    if (position.closed) {
-      return acc + position.pnl;
-    } else {
-      return acc;
-    }
-  }, 0);
-};
-
 interface PositionTableProps {
   initialPositions: Position[];
 }
 
 const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
-  const [positions, setPositions] = useState<Position[]>(initialPositions);
-  const { supabase, user } = useUser();
+  const { positions, supabase, balance, user } = useUser();
+  const displayPositions = positions || initialPositions;
+  const handleSell = async (position: Position) => {
+    console.log("hits");
+    console.log("pos", position);
+    const { error } = await supabase
+      .from("positions")
+      .update({
+        closed: true,
+      })
+      .eq("id", position.id);
 
-  useEffect(() => {
-    let unsub: any = null;
-    if (user) {
-      unsub = supabase
-        .channel("custom-all-channel")
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "positions",
-            filter: `user_id=eq.${user?.id}`,
-          },
-          (payload: any) => {
-            if (payload.eventType === "UPDATE") {
-              console.log(payload);
-              setPositions((positions) =>
-                positions.map((position) => {
-                  if (position.id === payload.new.id) {
-                    return payload.new;
-                  } else {
-                    return position;
-                  }
-                }),
-              );
-            } else {
-              setPositions((positions) => [payload.new, ...positions]);
-            }
-          },
-        )
-        .subscribe();
+    // const { error } = await supabase
+    //   .from("positions")
+    //   .delete()
+    //   .eq("id", position.id);
+
+    console.log("res", error);
+    if (error) {
+      toast.error("Something went wrong");
+      return console.log(error);
     }
-
-    return () => {
-      if (unsub) {
-        supabase.removeChannel(unsub);
-      }
-    };
-  }, [user]);
+    const { error: error2 } = await supabase
+      .from("balances")
+      .update({ balance: balance! + position.pnl })
+      .eq("user_id", user!.id);
+    if (error2) {
+      toast.error("Something went wrong");
+    } else {
+      toast.success("Position closed 💰");
+    }
+  };
 
   return (
     <div className="rounded-lg border-1 border-gray-300 bg-white">
@@ -78,18 +59,8 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
         <div className="flex w-[15%] flex-col gap-1">
           <p className="text-gray-500">Open Interest</p>
           <p className="text-lg font-medium">
-            {moneyParse(calcTotalSize(positions))}
+            {moneyParse(calcTotalSize(positions || initialPositions))}
           </p>
-        </div>
-        <div className="flex w-[15%] flex-col gap-1">
-          <p className="text-gray-500">Total Loss</p>
-          <p className="text-lg font-medium text-red-500">
-            {moneyParse(Math.abs(calcTotalLoss(positions)))}
-          </p>
-        </div>
-        <div className="h-full! flex w-[15%] flex-col justify-between">
-          <p className="text-gray-500">Total Gains</p>
-          <div className="text-xl">🎰💩🎰💩</div>
         </div>
       </div>
       <table className="w-full">
@@ -104,8 +75,12 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
           </tr>
         </thead>
         <tbody>
-          {positions.map((position: Position) => (
-            <PositionItem position={position} key={position.id} />
+          {displayPositions.map((position: Position) => (
+            <PositionItem
+              position={position}
+              key={position.id}
+              handleSell={handleSell}
+            />
           ))}
         </tbody>
       </table>

@@ -4,12 +4,15 @@ import { FC } from "react";
 
 interface PositionItemProps {
   position: Position;
+  handleSell: (position: Position) => void;
 }
 
-const PositionItem: FC<PositionItemProps> = ({ position }) => {
-  console.log(position);
+const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
   return (
-    <tr className="w-full border-t-1 border-gray-300">
+    <tr
+      className="w-full cursor-pointer border-t-1 border-gray-300 hover:bg-primary-50"
+      onClick={() => handleSell(position)}
+    >
       <td className="p-4">
         <div className="flex items-center gap-2">
           <Image

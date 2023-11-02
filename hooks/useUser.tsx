@@ -7,6 +7,7 @@ type UserContextType = {
   balance: number | null;
   user: User | null;
   supabase: any;
+  positions: Position[] | null;
 };
 
 export const UserContext = createContext<UserContextType | undefined>(
@@ -25,6 +26,7 @@ export const MyUserContextProvider = (props: Props) => {
   } = useSessionContext();
   const [user, setUser] = useState<User | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
+  const [positions, setPositions] = useState<Position[] | null>(null);
 
   useEffect(() => {
     let unsub: any = null;
@@ -62,17 +64,62 @@ export const MyUserContextProvider = (props: Props) => {
     };
   }, [session]);
 
+  useEffect(() => {
+    let unsub: any = null;
+    if (session) {
+      const { user } = session;
+      supabase
+        .from("positions")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .eq("user_id", user.id)
+        .then((res) => {
+          setPositions(res.data);
+        });
+      unsub = supabase
+        .channel("custom-all-channel")
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "positions",
+            filter: `user_id=eq.${user?.id}`,
+          },
+          (payload: any) => {
+            if (payload.eventType === "UPDATE") {
+              console.log(payload);
+              setPositions((positions) =>
+                positions!.map((position) => {
+                  if (position.id === payload.new.id) {
+                    return payload.new;
+                  } else {
+                    return position;
+                  }
+                }),
+              );
+            } else {
+              setPositions((positions) => [payload.new, ...positions!]);
+            }
+          },
+        )
+        .subscribe();
+    }
+    return () => {
+      if (unsub) {
+        supabase.removeChannel(unsub);
+      }
+    };
+  }, [session]);
+
   const res: UserContextType = {
     user,
     supabase,
     balance,
+    positions,
   };
 
-  return (
-    <UserContext.Provider value={res} {...props} />
-    //   {props.children}
-    // </UserContext.Provider>
-  );
+  return <UserContext.Provider value={res} {...props} />;
 };
 
 export const useUser = () => {

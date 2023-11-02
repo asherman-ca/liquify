@@ -20,7 +20,7 @@ const page = async () => {
 
   return (
     <div className="flex flex-1 flex-col gap-4 bg-gray-50 p-6">
-      <BalanceHeader initialBalance={balance} />
+      <BalanceHeader initialBalance={balance} initialPositions={positions} />
       <PositionTable initialPositions={positions} />
     </div>
   );
