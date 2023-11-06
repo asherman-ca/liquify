@@ -7,6 +7,7 @@ import Sidebar from "@/components/Sidebar";
 import Content from "@/components/Content";
 import { MyUserContextProvider } from "@/hooks/useUser";
 import { Toaster } from "sonner";
+import ConfettiProvider from "@/providers/ConfettiProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
                 <Content>
                   {children}
                   <Toaster />
+                  <ConfettiProvider />
                 </Content>
               </Sidebar>
             </MyUserContextProvider>

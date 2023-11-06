@@ -4,6 +4,7 @@ import { FC } from "react";
 import PositionItem from "./PositionItem";
 import { moneyParse } from "@/libs/numbering";
 import { toast } from "sonner";
+import useConfetti from "@/hooks/useConfetti";
 
 const calcTotalSize = (positions: Position[]) => {
   return positions.reduce((acc, position) => {
@@ -20,9 +21,12 @@ interface PositionTableProps {
 }
 
 const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
+  const { active, toggle } = useConfetti();
   const { positions, supabase, balance, user } = useUser();
   const displayPositions = positions || initialPositions;
+
   const handleSell = async (position: Position) => {
+    if (position.closed) return;
     const { error } = await supabase
       .from("positions")
       .update({
@@ -41,6 +45,9 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
       toast.error("Something went wrong");
     } else {
       toast.success("Position closed 💰");
+      if (position.pnl > 0) {
+        toggle();
+      }
     }
   };
 
