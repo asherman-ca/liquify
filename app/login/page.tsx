@@ -122,7 +122,7 @@ export default function Login() {
             errorMessage={errors.password && errors.password.message}
             isRequired
           />
-          <div className="flex w-full gap-4">
+          <div className="mt-4 flex w-full gap-4">
             <Button
               onClick={handleSubmit(handleSignIn)}
               color="primary"
