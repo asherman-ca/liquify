@@ -63,7 +63,7 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
 
   return (
     <div className="rounded-lg border-1 border-gray-300 bg-white">
-      <div className="flex flex-col gap-1 border-b-1 border-gray-300 p-4">
+      <div className="flex flex-col gap-1 border-b-1 border-gray-300 p-6">
         <p className="text-gray-500">My cash</p>
         <p className="text-lg font-medium">
           {moneyParse(balance || initialBalance)}
@@ -73,7 +73,7 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
       <table className="w-full">
         <thead>
           <tr className="border-b-1 border-gray-300 text-left">
-            <th className="w-[20%] p-4">Name</th>
+            <th className="w-[20%] p-6">Name</th>
             <th className="w-[16%]">Total Cash</th>
             <th className="w-[16%]">Open Value</th>
             <th className="w-[16%]">PNL</th>
@@ -83,7 +83,7 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
         </thead>
         <tbody>
           <tr>
-            <td className="flex items-center gap-2 p-4">
+            <td className="flex items-center gap-2 p-6">
               <CircleDollarSign className="text-primary-500" /> US Dollar
             </td>
             <td>{moneyParse(balance || initialBalance)}</td>

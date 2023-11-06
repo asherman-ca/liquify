@@ -21,7 +21,7 @@ interface PositionTableProps {
 }
 
 const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
-  const { active, toggle } = useConfetti();
+  const { toggle } = useConfetti();
   const { positions, supabase, balance, user } = useUser();
   const displayPositions = positions || initialPositions;
 
@@ -53,7 +53,7 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
 
   return (
     <div className="rounded-lg border-1 border-gray-300 bg-white">
-      <div className="flex border-b-1 border-gray-300 p-4">
+      <div className="flex border-b-1 border-gray-300 p-6">
         <div className="flex w-[15%] flex-col gap-1">
           <p className="text-gray-500">Open Interest</p>
           <p className="text-lg font-medium">
@@ -64,7 +64,7 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
       <table className="w-full">
         <thead>
           <tr className="text-left">
-            <th className="w-[20%] p-4">Name</th>
+            <th className="w-[20%] p-6">Name</th>
             <th className="w-[16%]">Size</th>
             <th className="w-[16%]">PNL</th>
             <th className="w-[16%]">Leverage</th>

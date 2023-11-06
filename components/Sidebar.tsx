@@ -42,7 +42,7 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
       <div
         id="sidebar"
         {...props}
-        className="flex flex-col gap-4 border-r-1 border-gray-300 p-4"
+        className="hidden flex-col gap-4 border-r-1 border-gray-300 p-4 sm:flex"
       >
         <Link href={"/"}>
           <Image

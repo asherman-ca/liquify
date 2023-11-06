@@ -21,8 +21,8 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
       className="w-full cursor-pointer border-t-1 border-gray-300 hover:bg-primary-50"
       onClick={() => handleSell(position)}
     >
-      <td className="p-4">
-        <div className="flex items-center gap-2">
+      <td className="p-6">
+        <div className="flex items-center gap-4">
           <Image
             src={`/icon/${position.coin_symbol.toLowerCase()}.png`}
             className="h-8 w-8"

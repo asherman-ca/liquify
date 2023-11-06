@@ -19,7 +19,7 @@ const page = async () => {
   const balance = await getBalance();
 
   return (
-    <div className="flex flex-1 flex-col gap-4 bg-gray-50 p-6">
+    <div className="flex flex-1 flex-col gap-6 bg-gray-50 p-6">
       <BalanceHeader initialBalance={balance} initialPositions={positions} />
       <PositionTable initialPositions={positions} />
     </div>
