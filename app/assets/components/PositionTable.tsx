@@ -57,12 +57,12 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
       <table className="w-full">
         <thead>
           <tr className="text-left">
-            <th className="p-4">Name</th>
-            <th>Size</th>
-            <th>PNL</th>
-            <th>Leverage</th>
-            <th>Entry</th>
-            <th>Status</th>
+            <th className="w-[20%] p-4">Name</th>
+            <th className="w-[16%]">Size</th>
+            <th className="w-[16%]">PNL</th>
+            <th className="w-[16%]">Leverage</th>
+            <th className="w-[16%]">Entry</th>
+            <th className="w-[16%]">Status</th>
           </tr>
         </thead>
         <tbody>

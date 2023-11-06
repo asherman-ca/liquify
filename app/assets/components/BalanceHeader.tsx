@@ -16,7 +16,27 @@ const calcTotalGains = (positions: Position[]) => {
 
 const calcTotalLoss = (positions: Position[]) => {
   return positions.reduce((acc, position) => {
-    if (position.closed) {
+    if (position.closed && position.pnl < 0) {
+      return acc + position.pnl;
+    } else {
+      return acc;
+    }
+  }, 0);
+};
+
+const calcTotalOpenValue = (positions: Position[]) => {
+  return positions.reduce((acc, position) => {
+    if (!position.closed) {
+      return acc + position.value;
+    } else {
+      return acc;
+    }
+  }, 0);
+};
+
+const calcTotalOpenPnl = (positions: Position[]) => {
+  return positions.reduce((acc, position) => {
+    if (!position.closed) {
       return acc + position.pnl;
     } else {
       return acc;
@@ -35,6 +55,12 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
 }) => {
   const { balance, positions } = useUser();
 
+  const totalGains = calcTotalGains(positions || initialPositions);
+  const totalLoss = calcTotalLoss(positions || initialPositions);
+  const totalOpenValue = calcTotalOpenValue(positions || initialPositions);
+  const pnl =
+    totalGains + totalLoss + calcTotalOpenPnl(positions || initialPositions);
+
   return (
     <div className="rounded-lg border-1 border-gray-300 bg-white">
       <div className="flex flex-col gap-1 border-b-1 border-gray-300 p-4">
@@ -46,11 +72,13 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
 
       <table className="w-full">
         <thead>
-          <tr className="border-b-1 border-gray-300">
-            <th className="p-4 text-left">Name</th>
-            <th className="text-left">Total balance</th>
-            <th className="text-left">Total Losses</th>
-            <th className="text-left">Total Gains</th>
+          <tr className="border-b-1 border-gray-300 text-left">
+            <th className="w-[20%] p-4">Name</th>
+            <th className="w-[16%]">Total Cash</th>
+            <th className="w-[16%]">Open Value</th>
+            <th className="w-[16%]">PNL</th>
+            <th className="w-[16%]">Total Losses</th>
+            <th className="w-[16%]">Total Income</th>
           </tr>
         </thead>
         <tbody>
@@ -59,16 +87,16 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
               <CircleDollarSign className="text-primary-500" /> US Dollar
             </td>
             <td>{moneyParse(balance || initialBalance)}</td>
-            <td>
-              {moneyParse(
-                Math.abs(calcTotalLoss(positions || initialPositions)),
-              )}
+            <td>{moneyParse(totalOpenValue)}</td>
+            <td
+              className={`${pnl < 0 && "text-red-500"} ${
+                pnl > 0 && "text-green-500"
+              }`}
+            >
+              {pnl < 0 ? `-${moneyParse(Math.abs(pnl))}` : moneyParse(pnl)}
             </td>
-            <td>
-              {moneyParse(
-                Math.abs(calcTotalGains(positions || initialPositions)),
-              )}
-            </td>
+            <td className="text-red-500">{moneyParse(Math.abs(totalLoss))}</td>
+            <td className="text-green-500">{moneyParse(totalGains)}</td>
           </tr>
         </tbody>
       </table>

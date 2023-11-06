@@ -1,4 +1,12 @@
 import { moneyParse } from "@/libs/numbering";
+import {
+  ArrowBigDown,
+  ArrowBigUp,
+  Droplets,
+  Flame,
+  Lock,
+  UnlockIcon,
+} from "lucide-react";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -35,21 +43,32 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
           : moneyParse(position.pnl)}
       </td>
       <td>{position.leverage}x</td>
-      <td>{moneyParse(position.coin_price)}</td>
       <td>
-        <span
-          className={`${position.closed ? "text-red-500" : "text-green-500"}`}
-        >
-          {position.closed ? "closed" : "open"}
-        </span>{" "}
-        -{" "}
-        <span
-          className={`${
-            position.direction === "short" ? "text-red-500" : "text-green-500"
-          }`}
-        >
-          {position.direction}
-        </span>
+        <div className="flex gap-1">
+          {moneyParse(position.coin_price)}
+          <span
+            className={`${
+              position.direction === "short" ? "text-red-500" : "text-green-500"
+            }`}
+          >
+            {position.direction === "long" ? <ArrowBigUp /> : <ArrowBigDown />}
+          </span>
+        </div>
+      </td>
+      <td>
+        <div className="flex h-full gap-1">
+          <span
+            className={`${position.closed ? "text-red-500" : "text-green-500"}`}
+          >
+            {position.closed ? <Lock /> : <UnlockIcon />}
+          </span>
+          {position.liquidated && (
+            <>
+              {" "}
+              - <Droplets className="text-blue-500" />
+            </>
+          )}
+        </div>
       </td>
     </tr>
   );

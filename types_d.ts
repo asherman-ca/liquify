@@ -13,6 +13,7 @@ declare interface Position {
   closed: boolean;
   size: number;
   pnl: number;
+  liquidated: boolean;
 }
 
 declare interface Coin {

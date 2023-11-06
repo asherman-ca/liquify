@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex h-full`}>
+      <body className={`${inter.className} flex h-full min-h-screen`}>
         <ThemeProvider>
           <SupabaseProvider>
             <MyUserContextProvider>

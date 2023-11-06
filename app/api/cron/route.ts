@@ -34,6 +34,7 @@ export async function GET() {
                 size: initialSize - position.value,
                 closed: true,
                 pnl: -position.value,
+                liquidated: true,
               })
               .eq("id", position.id);
           } else {
@@ -64,6 +65,7 @@ export async function GET() {
                 size: initialSize - position.value,
                 closed: true,
                 pnl: -position.value,
+                liquidated: true,
               })
               .eq("id", position.id);
           } else {
