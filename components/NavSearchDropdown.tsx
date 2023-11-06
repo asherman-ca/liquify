@@ -51,7 +51,7 @@ const NavSearchDropdown: FC<NavSearchDropdownProps> = ({ coins }) => {
           setOpen(false);
           setSearch("");
         }}
-        className={`duration-2000 fixed left-0 top-0 z-10 h-screen w-full bg-gray-500 transition ease-in  ${
+        className={`duration-2000 fixed right-0 top-0 z-10 h-screen w-screen bg-gray-500 transition ease-in  ${
           open ? "flex opacity-50" : "hidden opacity-0"
         }`}
       ></div>
