@@ -1,10 +1,13 @@
 "use client";
 
+import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 const getURL = () => {
   let url = process?.env?.NEXT_PUBLIC_SITE_URL as string;
@@ -19,29 +22,55 @@ const getURL = () => {
   return url;
 };
 
+type Inputs = {
+  email: string;
+  password: string;
+};
+
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const router = useRouter();
   const supabase = createClientComponentClient();
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+  } = useForm<Inputs>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleSignUp = async () => {
-    await supabase.auth.signUp({
+  const handleSignUp: SubmitHandler<Inputs> = async (data) => {
+    const { email, password } = data;
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: `${location.origin}/auth/callback`,
       },
     });
-    router.refresh();
+    if (error) {
+      toast.error("Authentication failed");
+    } else {
+      router.refresh();
+    }
   };
 
-  const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    router.refresh();
+  const handleSignIn: SubmitHandler<Inputs> = async (data) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+    };
+    const { error } = await supabase.auth.signInWithPassword(payload);
+    if (error) {
+      toast.error("Authentication failed");
+    } else {
+      router.refresh();
+      router.push("/home");
+    }
   };
 
   const handleSignOut = async () => {
@@ -67,22 +96,45 @@ export default function Login() {
           <p>Not your device? Use a private or incognito window to sign in.</p>
         </div>
         <div className="flex flex-col gap-4">
-          <input
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+          <Input
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: "Entered value does not match email format",
+              },
+            })}
+            label="Email"
+            type="email"
+            errorMessage={errors.email && errors.email.message}
+            isRequired
           />
-          <input
+          <Input
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+            })}
+            label="Password"
             type="password"
-            name="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
+            errorMessage={errors.password && errors.password.message}
+            isRequired
           />
           <div className="flex w-full gap-4">
-            <Button onClick={handleSignIn} color="primary" className="flex-1">
+            <Button
+              onClick={handleSubmit(handleSignIn)}
+              color="primary"
+              className="flex-1"
+            >
               Sign in
             </Button>
-            <Button onClick={handleSignUp} color="primary" className="flex-1">
+            <Button
+              onClick={handleSubmit(handleSignUp)}
+              color="primary"
+              className="flex-1"
+            >
               Sign up
             </Button>
           </div>

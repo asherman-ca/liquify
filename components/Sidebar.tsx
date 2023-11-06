@@ -38,7 +38,7 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-1">
+    <div className="flex h-full min-h-screen flex-1">
       <div
         id="sidebar"
         {...props}
