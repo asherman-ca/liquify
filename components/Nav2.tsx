@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/react";
 
 import { FC, useState } from "react";
-import NavTitle from "./ui/NavTitle";
+import NavTitle from "./nav/NavTitle";
 
 interface Nav2Props {}
 

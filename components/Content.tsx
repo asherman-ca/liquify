@@ -8,7 +8,10 @@ interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Content = ({ children, ...props }: ContentProps) => {
   return (
-    <div {...props} className="flex flex-1 flex-col overflow-x-auto">
+    <div
+      {...props}
+      className="flex flex-1 flex-col overflow-x-auto md:overflow-x-visible"
+    >
       <NavContainer />
       {children}
     </div>

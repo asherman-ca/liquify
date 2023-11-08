@@ -12,10 +12,10 @@ import {
 } from "@nextui-org/react";
 
 import { FC, useState } from "react";
-import NavTitle from "../ui/NavTitle";
-import NavSearchDropdown from "../NavSearchDropdown";
+import NavTitle from "./NavTitle";
+import NavSearchDropdown from "./NavSearchDropdown";
 import BuySellModal from "../buy-sell-form/BuySellModal";
-import Dropdown from "../ui/Dropdown";
+import Dropdown from "./Dropdown";
 import Image from "next/image";
 import AuthMenu from "./AuthMenu";
 import NoAuthMenu from "./NoAuthMenu";

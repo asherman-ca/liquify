@@ -1,9 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import Dropdown from "./ui/Dropdown";
-import NavTitle from "./ui/NavTitle";
+import Dropdown from "./nav/Dropdown";
+import NavTitle from "./nav/NavTitle";
 import BuySellButton from "./ui/BuySellButton";
-import NavSearchDropdown from "./NavSearchDropdown";
+import NavSearchDropdown from "./nav/NavSearchDropdown";
 import getCoins from "@/actions/getCoins";
 import BuySellModal from "./buy-sell-form/BuySellModal";
 import getBalance from "@/actions/getBalance";
