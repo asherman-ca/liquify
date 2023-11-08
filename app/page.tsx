@@ -16,7 +16,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex min-w-[850px] flex-1 flex-col overflow-x-auto scrollbar-hide">
       {user && balanceElement}
       <CoinTable initialCoins={coins} />
     </div>

@@ -19,7 +19,7 @@ type LinkType = {
 const links: LinkType[] = [
   {
     title: "Home",
-    url: "/home",
+    url: "/",
     logo: <Home />,
   },
   {
@@ -42,7 +42,7 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
       <div
         id="sidebar"
         {...props}
-        className="hidden flex-col gap-4 border-r-1 border-gray-300 p-4 sm:flex"
+        className="hidden flex-col gap-4 border-r-1 border-gray-300 p-4 md:flex"
       >
         <Link href={"/"}>
           <Image

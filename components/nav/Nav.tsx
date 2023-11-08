@@ -44,21 +44,21 @@ const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
       onMenuOpenChange={setIsMenuOpen}
       isBordered
       classNames={{
-        base: "justify-between w-full p-2",
+        base: "justify-between w-full px-4",
         wrapper: "w-full max-w-none",
       }}
     >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          className="md:hidden"
         />
-        <NavbarBrand>
+        <NavbarBrand className="hidden md:flex">
           <NavTitle />
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent justify="end" className="gap-6">
+      <NavbarContent justify="end" className="hidden gap-6 md:flex">
         <NavbarItem>
           <NavSearchDropdown coins={coins} />
         </NavbarItem>
@@ -74,7 +74,7 @@ const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
 
       <NavbarMenu>
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+          <NavbarMenuItem key={`${item}-${index}`} className="px-4">
             <Link
               color={
                 index === 2
