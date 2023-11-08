@@ -16,6 +16,9 @@ import NavTitle from "../ui/NavTitle";
 import NavSearchDropdown from "../NavSearchDropdown";
 import BuySellModal from "../buy-sell-form/BuySellModal";
 import Dropdown from "../ui/Dropdown";
+import Image from "next/image";
+import AuthMenu from "./AuthMenu";
+import NoAuthMenu from "./NoAuthMenu";
 
 interface NavProps {
   coins: any;
@@ -48,7 +51,7 @@ const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
         wrapper: "w-full max-w-none",
       }}
     >
-      <NavbarContent>
+      <NavbarContent className="justify-between! flex">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="md:hidden"
@@ -56,6 +59,18 @@ const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
         <NavbarBrand className="hidden md:flex">
           <NavTitle />
         </NavbarBrand>
+      </NavbarContent>
+
+      <NavbarContent justify="end">
+        <Link href={"/"}>
+          <Image
+            src="/logo.png"
+            alt="logo"
+            height={1024}
+            width={1024}
+            className="h-12 w-12 md:hidden"
+          />
+        </Link>
       </NavbarContent>
 
       <NavbarContent justify="end" className="hidden gap-6 md:flex">
@@ -72,26 +87,7 @@ const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`} className="px-4">
-            <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
-              }
-              className="w-full"
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
+      {session.session ? <AuthMenu /> : <NoAuthMenu />}
     </Navbar>
   );
 };
