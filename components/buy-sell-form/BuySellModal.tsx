@@ -19,6 +19,7 @@ import styles from "./form.module.css";
 const { inputField } = styles;
 import { useUser } from "@/hooks/useUser";
 import { toast } from "sonner";
+import useTradeModal from "@/hooks/useTradeModal";
 
 interface BuySellModalProps {
   coins: Coin[];
@@ -36,6 +37,7 @@ type Inputs = {
 };
 
 const BuySellModal: FC<BuySellModalProps> = ({ coins, balance }) => {
+  const { toggle } = useTradeModal();
   const { supabase, user, balance: curBalance } = useUser();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [open, setOpen] = useState<boolean>(false);

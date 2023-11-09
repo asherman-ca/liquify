@@ -60,7 +60,7 @@ const Dropdown = ({ user }: DropdownProps) => {
               Theme
             </DropdownItem>
             <DropdownItem href="/home">Home</DropdownItem>
-            <DropdownItem href="/assets">assets</DropdownItem>
+            <DropdownItem href="/assets">Assets</DropdownItem>
           </DropdownSection>
           {user ? (
             <DropdownItem onClick={handleSignOut} className="text-red-500">

@@ -37,7 +37,11 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
         </div>
       </td>
       <td>{moneyParse(position.size)}</td>
-      <td className={`${position.pnl < 0 ? "text-red-500" : "text-green-500"}`}>
+      <td
+        className={`${position.pnl < 0 && "text-red-500"} ${
+          position.pnl > 0 && "text-green-500"
+        }`}
+      >
         {position.pnl < 0
           ? `-${moneyParse(Math.abs(position.pnl))}`
           : moneyParse(position.pnl)}

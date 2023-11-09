@@ -88,7 +88,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center pt-32">
+    <div className="flex justify-center px-6 pt-32 md:px-0">
       <div className="flex flex-col gap-8 rounded-md border-1 border-gray-300 p-8">
         <h1 className="text-2xl font-semibold text-blue-500">liquify</h1>
         <div className="flex flex-col gap-2">

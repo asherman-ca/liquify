@@ -29,6 +29,10 @@ export const MyUserContextProvider = (props: Props) => {
   const [positions, setPositions] = useState<Position[] | null>(null);
 
   useEffect(() => {
+    if (!session) setUser(null);
+  }, [session]);
+
+  useEffect(() => {
     let unsub: any = null;
     if (session) {
       const { user } = session;

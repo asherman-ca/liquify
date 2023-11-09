@@ -11,7 +11,7 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/react";
 
-import { FC, useState } from "react";
+import { FC, use, useState } from "react";
 import NavTitle from "./NavTitle";
 import NavSearchDropdown from "./NavSearchDropdown";
 import BuySellModal from "../buy-sell-form/BuySellModal";
@@ -19,6 +19,7 @@ import Dropdown from "./Dropdown";
 import Image from "next/image";
 import AuthMenu from "./AuthMenu";
 import NoAuthMenu from "./NoAuthMenu";
+import useTradeModal from "@/hooks/useTradeModal";
 
 interface NavProps {
   coins: any;
@@ -26,8 +27,9 @@ interface NavProps {
   balance: number;
 }
 
-const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
+const Nav: FC<NavProps> = ({ coins, session, balance }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { toggle } = useTradeModal();
 
   const menuItems = [
     "Profile",
@@ -47,7 +49,7 @@ const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
       onMenuOpenChange={setIsMenuOpen}
       isBordered
       classNames={{
-        base: "justify-between w-full px-4",
+        base: "justify-between w-full md:px-4",
         wrapper: "w-full max-w-none",
       }}
     >
@@ -79,7 +81,14 @@ const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
         </NavbarItem>
         {session.session && (
           <NavbarItem>
-            <BuySellModal coins={coins} balance={balance!} />
+            {/* <BuySellModal coins={coins} balance={balance!} /> */}
+            <Button
+              onPress={() => toggle(true)}
+              className="h-[40px] rounded-full px-8"
+              color="primary"
+            >
+              Buy & Sell
+            </Button>
           </NavbarItem>
         )}
         <NavbarItem>
@@ -87,9 +96,9 @@ const Nav2: FC<NavProps> = ({ coins, session, balance }) => {
         </NavbarItem>
       </NavbarContent>
 
-      {session.session ? <AuthMenu /> : <NoAuthMenu />}
+      {session.session ? <AuthMenu user={session.session} /> : <NoAuthMenu />}
     </Navbar>
   );
 };
 
-export default Nav2;
+export default Nav;

@@ -2,9 +2,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Coins, Home, PiggyBank } from "lucide-react";
-import { ReactComponentElement } from "react";
-import { usePathname } from "next/navigation";
+import { ReactComponentElement, use } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/libs/utils";
+import useTradeModal from "@/hooks/useTradeModal";
+import { useUser } from "@/hooks/useUser";
 
 interface SideBarProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -27,15 +29,18 @@ const links: LinkType[] = [
     url: "/assets",
     logo: <PiggyBank />,
   },
-  {
-    title: "Trade",
-    url: "/trade",
-    logo: <Coins />,
-  },
+  // {
+  //   title: "Trade",
+  //   url: "/trade",
+  //   logo: <Coins />,
+  // },
 ];
 
 const Sidebar = ({ children, ...props }: SideBarProps) => {
+  const { user } = useUser();
   const pathname = usePathname();
+  const router = useRouter();
+  const { toggle } = useTradeModal();
 
   return (
     <div className="flex h-full min-h-screen flex-1">
@@ -79,6 +84,21 @@ const Sidebar = ({ children, ...props }: SideBarProps) => {
           >
             liquify
           </button> */}
+          <button
+            onClick={() => {
+              if (user) {
+                toggle(true);
+              } else {
+                router.push("/login");
+              }
+            }}
+            className={cn(
+              "flex-start flex w-full items-center gap-4 rounded-full p-4 font-medium hover:bg-gray-100 dark:hover:bg-blue-950 dark:hover:text-white",
+            )}
+          >
+            <Coins />
+            Trade
+          </button>
         </div>
       </div>
       {children}
