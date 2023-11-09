@@ -73,6 +73,21 @@ export default function Login() {
     }
   };
 
+  const handleGuest = async () => {
+    const payload = {
+      email: "liquifyguest@yahoo.com",
+      password: "liquifyguest",
+    };
+    const { error } = await supabase.auth.signInWithPassword(payload);
+    if (error) {
+      console.log("error", error);
+      toast.error("Authentication failed");
+    } else {
+      router.refresh();
+      router.push("/home");
+    }
+  };
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     router.refresh();
@@ -156,6 +171,13 @@ export default function Login() {
             className="h-5 w-5"
           />
           <p>Sign in with Google</p>
+        </Button>
+        <div className="relative flex justify-center">
+          <p className="bg-white p-2 text-center text-sm">OR</p>
+          <div className="absolute left-0 top-[50%] -z-10 w-full border-b-1 border-gray-300"></div>
+        </div>
+        <Button variant="ghost" onClick={handleGuest} className="mx-auto">
+          Login as Guest
         </Button>
       </div>
     </div>

@@ -1,5 +1,3 @@
-import Nav from "./Nav";
-import Nav2 from "./Nav2";
 import NavContainer from "./nav/NavContainer";
 
 interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
