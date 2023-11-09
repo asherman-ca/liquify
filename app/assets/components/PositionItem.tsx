@@ -21,8 +21,8 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
       className="w-full cursor-pointer border-t-1 border-gray-300 hover:bg-primary-50"
       onClick={() => handleSell(position)}
     >
-      <td className="p-6">
-        <div className="flex items-center gap-4">
+      <td className="py-6 pl-6">
+        <div className="flex items-center gap-4 text-start">
           <Image
             src={`/icon/${position.coin_symbol.toLowerCase()}.png`}
             className="h-8 w-8"
@@ -31,8 +31,8 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
             width={32}
           />
           <div>
-            <p>{position.coin_name}</p>
-            <p>{position.coin_symbol}</p>
+            <p className="font-semibold">{position.coin_name}</p>
+            <p className="text-gray-500">{position.coin_symbol}</p>
           </div>
         </div>
       </td>
@@ -48,7 +48,7 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
       </td>
       <td>{position.leverage}x</td>
       <td>
-        <div className="flex gap-1">
+        <div className="flex justify-end gap-1">
           {moneyParse(position.coin_price)}
           <span
             className={`${
@@ -59,8 +59,8 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
           </span>
         </div>
       </td>
-      <td>
-        <div className="flex h-full gap-1">
+      <td className="pr-6">
+        <div className="flex h-full justify-end gap-1">
           <span
             className={`${position.closed ? "text-red-500" : "text-green-500"}`}
           >

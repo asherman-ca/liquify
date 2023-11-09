@@ -63,16 +63,16 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
       </div>
       <table className="w-full">
         <thead>
-          <tr className="text-left">
-            <th className="w-[20%] p-6">Name</th>
+          <tr className="text-right">
+            <th className="w-[20%] py-6 pl-6 text-left">Name</th>
             <th className="w-[16%]">Size</th>
             <th className="w-[16%]">PNL</th>
             <th className="w-[16%]">Leverage</th>
             <th className="w-[16%]">Entry</th>
-            <th className="w-[16%]">Status</th>
+            <th className="w-[16%] pr-6">Status</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-right">
           {displayPositions.map((position: Position) => (
             <PositionItem
               position={position}

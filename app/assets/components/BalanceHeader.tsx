@@ -72,18 +72,18 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
 
       <table className="w-full">
         <thead>
-          <tr className="border-b-1 border-gray-300 text-left">
-            <th className="w-[20%] p-6">Name</th>
+          <tr className="border-b-1 border-gray-300 text-right">
+            <th className="w-[20%] py-6 pl-6 text-left">Name</th>
             <th className="w-[16%]">Total Cash</th>
             <th className="w-[16%]">Open Value</th>
             <th className="w-[16%]">PNL</th>
             <th className="w-[16%]">Total Losses</th>
-            <th className="w-[16%]">Total Income</th>
+            <th className="w-[16%] pr-6">Total Income</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="flex items-center gap-2 p-6">
+          <tr className="text-right">
+            <td className="flex items-center gap-2 py-6 pl-6">
               <CircleDollarSign className="text-primary-500" /> US Dollar
             </td>
             <td>{moneyParse(balance || initialBalance)}</td>
@@ -96,7 +96,7 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
               {pnl < 0 ? `-${moneyParse(Math.abs(pnl))}` : moneyParse(pnl)}
             </td>
             <td className="text-red-500">{moneyParse(Math.abs(totalLoss))}</td>
-            <td className="text-green-500">{moneyParse(totalGains)}</td>
+            <td className="pr-6 text-green-500">{moneyParse(totalGains)}</td>
           </tr>
         </tbody>
       </table>
