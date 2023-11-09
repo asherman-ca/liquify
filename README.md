@@ -1,10 +1,10 @@
 ## Login Page
 
-![Alt text](https://github.com/asherman-ca/liquify/blob/main/readmeimages/liquifypreview2.jpg)
+![Alt text](https://github.com/asherman-ca/liquify/blob/main/readmeimages/liquifypreview1.jpg)
 
 ## Trading Page / Modal
 
-![Alt text](https://github.com/asherman-ca/tickr4/blob/main/readmeimages/liquifypreview1.jpg)
+![Alt text](https://github.com/asherman-ca/liquify/blob/main/readmeimages/liquifypreview2.jpg)
 
 ## Stack:
 
