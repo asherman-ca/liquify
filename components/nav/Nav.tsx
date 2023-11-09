@@ -7,14 +7,11 @@ import {
   Link,
   Button,
   NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
 } from "@nextui-org/react";
 
-import { FC, use, useState } from "react";
+import { FC, useState } from "react";
 import NavTitle from "./NavTitle";
 import NavSearchDropdown from "./NavSearchDropdown";
-import BuySellModal from "../buy-sell-form/BuySellModal";
 import Dropdown from "./Dropdown";
 import Image from "next/image";
 import AuthMenu from "./AuthMenu";
@@ -31,22 +28,10 @@ const Nav: FC<NavProps> = ({ coins, session, balance }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { toggle } = useTradeModal();
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
-
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
+      isMenuOpen={isMenuOpen}
       isBordered
       classNames={{
         base: "justify-between w-full md:px-4",
@@ -81,7 +66,6 @@ const Nav: FC<NavProps> = ({ coins, session, balance }) => {
         </NavbarItem>
         {session.session && (
           <NavbarItem>
-            {/* <BuySellModal coins={coins} balance={balance!} /> */}
             <Button
               onPress={() => toggle(true)}
               className="h-[40px] rounded-full px-8"
@@ -96,7 +80,11 @@ const Nav: FC<NavProps> = ({ coins, session, balance }) => {
         </NavbarItem>
       </NavbarContent>
 
-      {session.session ? <AuthMenu user={session.session} /> : <NoAuthMenu />}
+      {session.session ? (
+        <AuthMenu user={session.session} setOpen={setIsMenuOpen} />
+      ) : (
+        <NoAuthMenu />
+      )}
     </Navbar>
   );
 };

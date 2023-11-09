@@ -1,18 +1,19 @@
+import useTradeModal from "@/hooks/useTradeModal";
 import { useUser } from "@/hooks/useUser";
 import { Link, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
-import Nav from "../Nav";
-
-const menuItems = ["Home", "Assets"];
 
 interface AuthMenuProps {
   user: any;
+  setOpen: (arg: boolean) => void;
 }
 
-const AuthMenu: FC<AuthMenuProps> = ({ user }) => {
+const AuthMenu: FC<AuthMenuProps> = ({ user, setOpen }) => {
   const { supabase } = useUser();
   const router = useRouter();
+  const { toggle } = useTradeModal();
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     router.refresh();
@@ -36,6 +37,15 @@ const AuthMenu: FC<AuthMenuProps> = ({ user }) => {
         <Link size="lg" href="/assets">
           Assets
         </Link>
+      </NavbarMenuItem>
+      <NavbarMenuItem
+        className="cursor-pointer text-primary-500"
+        onClick={() => {
+          setOpen(false);
+          toggle(true);
+        }}
+      >
+        Trade
       </NavbarMenuItem>
       {/* {menuItems.map((item, index) => (
         <NavbarMenuItem key={`${item}-${index}`} className="">

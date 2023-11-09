@@ -29,11 +29,6 @@ const links: LinkType[] = [
     url: "/assets",
     logo: <PiggyBank />,
   },
-  // {
-  //   title: "Trade",
-  //   url: "/trade",
-  //   logo: <Coins />,
-  // },
 ];
 
 const Sidebar = ({ children, ...props }: SideBarProps) => {
