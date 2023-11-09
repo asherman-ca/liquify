@@ -3,6 +3,7 @@
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { UserCircle2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -155,30 +156,34 @@ export default function Login() {
           </div>
         </div>
         <div className="relative flex justify-center">
-          <p className="bg-white p-2 text-center text-sm">OR</p>
+          <p className="bg-white px-2 text-center text-sm">OR</p>
           <div className="absolute left-0 top-[50%] -z-10 w-full border-b-1 border-gray-300"></div>
         </div>
-        <Button
-          variant="ghost"
-          onClick={handleGoogleSignIn}
-          className="mx-auto"
-        >
-          <Image
-            src="/googleIcon.png"
-            alt="Google Icon"
-            width={48}
-            height={48}
-            className="h-5 w-5"
-          />
-          <p>Sign in with Google</p>
-        </Button>
-        <div className="relative flex justify-center">
-          <p className="bg-white p-2 text-center text-sm">OR</p>
-          <div className="absolute left-0 top-[50%] -z-10 w-full border-b-1 border-gray-300"></div>
+        <div className="flex gap-4">
+          <Button
+            variant="ghost"
+            onClick={handleGoogleSignIn}
+            className="mx-auto flex-1"
+          >
+            <Image
+              src="/googleIcon.png"
+              alt="Google Icon"
+              width={48}
+              height={48}
+              className="h-5 w-5"
+            />
+            <p>Sign in with Google</p>
+          </Button>
+
+          <Button
+            variant="ghost"
+            onClick={handleGuest}
+            className="mx-auto flex-1"
+          >
+            <UserCircle2 className="h-5 w-5" />
+            Login as Guest
+          </Button>
         </div>
-        <Button variant="ghost" onClick={handleGuest} className="mx-auto">
-          Login as Guest
-        </Button>
       </div>
     </div>
   );
