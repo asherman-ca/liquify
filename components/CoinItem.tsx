@@ -20,7 +20,7 @@ const CoinItem: FC<CoinItemProps> = ({ coin }) => {
           width={32}
         />
         <div className="flex flex-col">
-          <p className="font-medium">{coin.name}</p>
+          <p className="font-medium text-black">{coin.name}</p>
           <p className="text-slate-400">{coin.symbol}</p>
         </div>
       </td>

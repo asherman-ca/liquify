@@ -38,7 +38,7 @@ const CoinTable: FC<CoinTableProps> = ({ initialCoins }) => {
   }, []);
 
   return (
-    <div className="flex flex-1 flex-col gap-4 px-6 py-6 md:px-10">
+    <div className="flex flex-1 flex-col gap-4 px-6 py-6 text-gray-500 md:px-10">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium">Prices</h2>
         <div className="flex items-center gap-6">
