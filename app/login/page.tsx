@@ -70,7 +70,7 @@ export default function Login() {
       toast.error("Authentication failed");
     } else {
       router.refresh();
-      router.push("/home");
+      router.push("/");
     }
   };
 
@@ -85,7 +85,7 @@ export default function Login() {
       toast.error("Authentication failed");
     } else {
       router.refresh();
-      router.push("/home");
+      router.push("/");
     }
   };
 
