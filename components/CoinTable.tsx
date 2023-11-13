@@ -8,23 +8,29 @@ export type FilterType = "top" | "trending" | "watchlist";
 
 interface CoinTableProps {
   initialCoins: Coin[];
+  user: any;
+  likes: any[];
 }
 
-const CoinTable: FC<CoinTableProps> = ({ initialCoins }) => {
+const CoinTable: FC<CoinTableProps> = ({ initialCoins, user, likes }) => {
   const [coins, setCoins] = useState<Coin[]>(initialCoins);
   const [filter, setFilter] = useState<FilterType>("top");
-  const [length, setLength] = useState<number>(5);
+  const [length, setLength] = useState<number>(10);
+  const [curLikes, setCurLikes] = useState<string[]>(likes || []);
 
-  const sortedCoins = coins
-    .sort((a, b) => {
-      if (filter === "top") {
-        return Number(b.marketCapUsd) - Number(a.marketCapUsd);
-      } else if (filter === "trending") {
-        return Number(b.changePercent24Hr) - Number(a.changePercent24Hr);
-      }
-      return Number(b.marketCapUsd) - Number(a.marketCapUsd);
-    })
-    .slice(0, length);
+  const sortedCoins =
+    filter === "watchlist"
+      ? coins.filter((coin) => curLikes.includes(coin.id))
+      : coins
+          .sort((a, b) => {
+            if (filter === "top") {
+              return Number(b.marketCapUsd) - Number(a.marketCapUsd);
+            } else if (filter === "trending") {
+              return Number(b.changePercent24Hr) - Number(a.changePercent24Hr);
+            }
+            return Number(b.marketCapUsd) - Number(a.marketCapUsd);
+          })
+          .slice(0, length);
 
   useEffect(() => {
     let id = setInterval(() => {
@@ -42,8 +48,8 @@ const CoinTable: FC<CoinTableProps> = ({ initialCoins }) => {
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium">Prices</h2>
         <div className="flex items-center gap-6">
-          <FilterMenu setFilter={setFilter} filter={filter} />
-          <button onClick={() => setLength((prev) => (prev === 5 ? 10 : 5))}>
+          <FilterMenu setFilter={setFilter} filter={filter} user={user} />
+          <button onClick={() => setLength((prev) => (prev === 10 ? 50 : 10))}>
             See all
           </button>
         </div>
@@ -51,7 +57,13 @@ const CoinTable: FC<CoinTableProps> = ({ initialCoins }) => {
       <table className="w-full">
         <tbody>
           {sortedCoins.map((coin) => (
-            <CoinItem key={coin.id} coin={coin} />
+            <CoinItem
+              key={coin.id}
+              coin={coin}
+              isAuthed={!!user}
+              initialLikedState={curLikes.includes(coin.id)}
+              setCurLikes={setCurLikes}
+            />
           ))}
         </tbody>
       </table>

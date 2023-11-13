@@ -23,6 +23,7 @@ const Dropdown = ({ user }: DropdownProps) => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
+    router.push("/login");
     router.refresh();
   };
 

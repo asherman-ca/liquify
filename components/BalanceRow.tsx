@@ -13,8 +13,6 @@ const BalanceRow: FC<BalanceRowProps> = ({ initialBalance }) => {
     setBalance(initialBalance);
   }, [initialBalance]);
 
-  console.log(initialBalance);
-
   return (
     <div className="border-b-1 border-gray-300 px-6 py-6 md:px-10">
       <div className="flex flex-col gap-1">

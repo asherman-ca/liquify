@@ -3,12 +3,24 @@ import Image from "next/image";
 import { FC } from "react";
 import { Star } from "lucide-react";
 import { parseNumber, moneyParse } from "@/libs/numbering";
+import { useRouter } from "next/navigation";
+import LikeButton from "./LikeButton";
 
 interface CoinItemProps {
   coin: Coin;
+  isAuthed: boolean;
+  initialLikedState: boolean;
+  setCurLikes: (arg: any) => void;
 }
 
-const CoinItem: FC<CoinItemProps> = ({ coin }) => {
+const CoinItem: FC<CoinItemProps> = ({
+  coin,
+  isAuthed,
+  initialLikedState,
+  setCurLikes,
+}) => {
+  const router = useRouter();
+
   return (
     <tr className="">
       <td className="flex w-[35%] items-center gap-4 py-4">
@@ -39,16 +51,35 @@ const CoinItem: FC<CoinItemProps> = ({ coin }) => {
 
       <td className="w-[10%] text-blue-500">
         <div className="flex w-full justify-end">
-          <button>Buy</button>
+          <button
+            onClick={() => {
+              if (!isAuthed) {
+                router.push("/login");
+              }
+            }}
+          >
+            Buy
+          </button>
         </div>
       </td>
 
       <td className="w-[10%]">
-        <div className="flex w-full justify-end">
-          <button>
-            <Star />
+        <LikeButton
+          coinId={coin.id}
+          initialLikedState={initialLikedState}
+          setCurLikes={setCurLikes}
+        />
+        {/* <div className="flex w-full justify-end">
+          <button
+            onClick={() => {
+              if (!isAuthed) {
+                router.push("/login");
+              }
+            }}
+          >
+            <Star className="text-blue-500" fill="true" />
           </button>
-        </div>
+        </div> */}
       </td>
     </tr>
   );

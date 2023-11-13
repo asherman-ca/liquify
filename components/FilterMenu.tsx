@@ -12,9 +12,10 @@ import { FilterType } from "./CoinTable";
 interface FilterMenuProps {
   setFilter: (filter: FilterType) => void;
   filter: string;
+  user: any;
 }
 
-const FilterMenu: FC<FilterMenuProps> = ({ setFilter, filter }) => {
+const FilterMenu: FC<FilterMenuProps> = ({ setFilter, filter, user }) => {
   return (
     <Dropdown
       classNames={{
@@ -34,9 +35,11 @@ const FilterMenu: FC<FilterMenuProps> = ({ setFilter, filter }) => {
           Trending
         </DropdownItem>
         <DropdownItem onClick={() => setFilter("top")}>Top assets</DropdownItem>
-        <DropdownItem onClick={() => setFilter("watchlist")}>
-          Watchlist
-        </DropdownItem>
+        {user && (
+          <DropdownItem onClick={() => setFilter("watchlist")}>
+            Watchlist
+          </DropdownItem>
+        )}
       </DropdownMenu>
     </Dropdown>
   );
