@@ -52,11 +52,11 @@ const PositionTable: FC<PositionTableProps> = ({ initialPositions }) => {
   };
 
   return (
-    <div className="rounded-lg border-1 border-gray-300 bg-white text-gray-500">
+    <div className="rounded-lg border-1 border-gray-300 bg-white text-gray-500 dark:bg-black">
       <div className="flex border-b-1 border-gray-300 p-6">
         <div className="flex w-[15%] flex-col gap-1">
           <p className="text-gray-500">Open Interest</p>
-          <p className="text-lg font-medium text-black">
+          <p className="text-lg font-medium text-black dark:text-white">
             {moneyParse(calcTotalSize(positions || initialPositions))}
           </p>
         </div>

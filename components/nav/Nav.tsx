@@ -32,9 +32,9 @@ const Nav: FC<NavProps> = ({ coins, session, balance }) => {
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
       isMenuOpen={isMenuOpen}
-      isBordered
+      // isBordered
       classNames={{
-        base: "justify-between w-full md:px-4",
+        base: "justify-between w-full md:px-4 border-b-1 border-gray-300",
         wrapper: "w-full max-w-none",
       }}
     >

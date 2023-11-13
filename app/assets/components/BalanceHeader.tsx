@@ -62,10 +62,10 @@ const BalanceHeader: FC<BalanceHeaderProps> = ({
     totalGains + totalLoss + calcTotalOpenPnl(positions || initialPositions);
 
   return (
-    <div className="rounded-lg border-1 border-gray-300 bg-white text-gray-500">
+    <div className="rounded-lg border-1 border-gray-300 bg-white text-gray-500 dark:bg-black">
       <div className="flex flex-col gap-1 border-b-1 border-gray-300 p-6">
         <p className="text-gray-500">My cash</p>
-        <p className="text-lg font-medium text-black">
+        <p className="text-lg font-medium text-black dark:text-white">
           {moneyParse(balance || initialBalance)}
         </p>
       </div>

@@ -19,7 +19,7 @@ const page = async () => {
   const balance = await getBalance();
 
   return (
-    <div className="flex min-w-[850px] flex-1 flex-col gap-6 bg-gray-50 p-6 scrollbar-hide">
+    <div className="flex min-w-[850px] flex-1 flex-col gap-6 bg-gray-50 p-6 scrollbar-hide dark:bg-black">
       <BalanceHeader initialBalance={balance} initialPositions={positions} />
       <PositionTable initialPositions={positions} />
     </div>
