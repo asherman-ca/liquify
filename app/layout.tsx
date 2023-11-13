@@ -10,6 +10,7 @@ import ConfettiProvider from "@/providers/ConfettiProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import getCoins from "@/actions/getCoins";
 import { GeistSans } from "geist/font/sans";
+import { Analytics } from "@vercel/analytics/react";
 
 // import { Inter } from "next/font/google";
 // const inter = Inter({ subsets: ["latin"] });
@@ -37,6 +38,7 @@ export default async function RootLayout({
               <Sidebar className="p-8">
                 <Content>
                   {children}
+                  <Analytics />
                   <Toaster />
                   <ConfettiProvider />
                   <ModalProvider coins={coins} />
