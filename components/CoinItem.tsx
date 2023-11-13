@@ -32,7 +32,7 @@ const CoinItem: FC<CoinItemProps> = ({
           width={32}
         />
         <div className="flex flex-col">
-          <p className="font-medium text-black">{coin.name}</p>
+          <p className="font-medium text-black dark:text-white">{coin.name}</p>
           <p className="text-slate-400">{coin.symbol}</p>
         </div>
       </td>
