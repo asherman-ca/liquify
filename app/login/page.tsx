@@ -156,7 +156,7 @@ export default function Login() {
           </div>
         </div>
         <div className="relative flex justify-center">
-          <p className="bg-white px-2 text-center text-sm">OR</p>
+          <p className="bg-white px-2 text-center text-sm dark:bg-black">OR</p>
           <div className="absolute left-0 top-[50%] -z-10 w-full border-b-1 border-gray-300"></div>
         </div>
         <div className="flex gap-4">

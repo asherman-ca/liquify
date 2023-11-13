@@ -1,4 +1,5 @@
 import { moneyParse } from "@/libs/numbering";
+import { cn } from "@/libs/utils";
 import {
   Modal,
   ModalContent,
@@ -38,7 +39,7 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
                 Are you sure you want to close this position? You cannot reverse
                 this action!
               </ModalBody>
-              <ModalFooter>
+              <ModalFooter className="justify-between">
                 <Button
                   onPress={() => {
                     onClose();
@@ -55,7 +56,9 @@ const PositionItem: FC<PositionItemProps> = ({ position, handleSell }) => {
         </ModalContent>
       </Modal>
       <tr
-        className="w-full cursor-pointer border-t-1 border-gray-300 hover:bg-primary-50"
+        className={cn("w-full border-t-1 border-gray-300 hover:bg-primary-50", {
+          "cursor-pointer": !position.closed,
+        })}
         onClick={() => {
           if (!position.closed) {
             onOpen();
