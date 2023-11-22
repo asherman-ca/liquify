@@ -54,8 +54,9 @@ export default function Login() {
       },
     });
     if (error) {
-      toast.error("Authentication failed");
+      toast.error(error.message || "Authentication failed");
     } else {
+      toast.success("Check your email for the confirmation link");
       router.refresh();
     }
   };
@@ -67,7 +68,7 @@ export default function Login() {
     };
     const { error } = await supabase.auth.signInWithPassword(payload);
     if (error) {
-      toast.error("Authentication failed");
+      toast.error(error.message || "Authentication failed");
     } else {
       router.refresh();
       router.push("/");
